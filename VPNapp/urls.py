@@ -10,7 +10,7 @@ urlpatterns = [
     #ex: /VPNapp/login
     path('login/',views.logInView,name='login'),
     #ex: /VPNapp/admin
-    path('admin/',views.adminView,name='admin'),
+    path('superuser/',views.adminView,name='admin'),
     #ex: /VPNapp/tryLogIn
     path('tryLogIn/',views.login,name='tryLogIn'),
     #ex: /VPNapp/user
@@ -21,6 +21,8 @@ urlpatterns = [
     path('restrictVLAN/',views.restrictVLAN,name='restrictVLAN'),
     #ex: /VPNapp/restrictUser
     path('restrictUser/',views.restrictUser,name='restrictUser'),
+    #ex: /close
+    path('close',views.close,name='close'),
 
     
 ]

@@ -1,3 +1,4 @@
+{%load static%}
 <!DOCTYPE html>
 <!-- Coding By CodingNepal - www.codingnepalweb.com -->
 <html>
@@ -31,7 +32,7 @@ body::before {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: url("https://www.codingnepalweb.com/demos/create-glassmorphism-login-form-html-css/hero-bg.jpg"), #000;
+  background-image: url("../static/back.jpg") ;
   background-position: center;
   background-size: cover;
 }
@@ -54,12 +55,12 @@ form {
 h2 {
   font-size: 2rem;
   margin-bottom: 20px;
-  color: #fff;
+  color: #000;
 }
 
 .input-field {
   position: relative;
-  border-bottom: 2px solid #ccc;
+  border-bottom: 2px solid #000000;
   margin: 15px 0;
 }
 
@@ -68,7 +69,7 @@ h2 {
   top: 50%;
   left: 0;
   transform: translateY(-50%);
-  color: #fff;
+  color: #000000;
   font-size: 16px;
   pointer-events: none;
   transition: 0.15s ease;
@@ -81,7 +82,7 @@ h2 {
   border: none;
   outline: none;
   font-size: 16px;
-  color: #fff;
+  color: #000000;
 }
 
 .input-field input:focus~label,
@@ -91,26 +92,6 @@ h2 {
   transform: translateY(-120%);
 }
 
-.forget {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 25px 0 35px 0;
-  color: #fff;
-}
-
-#remember {
-  accent-color: #fff;
-}
-
-.forget label {
-  display: flex;
-  align-items: center;
-}
-
-.forget label p {
-  margin-left: 8px;
-}
 
 .wrapper a {
   color: #efefef;
@@ -122,7 +103,7 @@ h2 {
 }
 
 button {
-  background: #fff;
+  background: #ffffff;
   color: #000;
   font-weight: 600;
   border: none;
@@ -135,7 +116,7 @@ button {
 }
 
 button:hover {
-  color: #fff;
+  color: #000000;
   border-color: #fff;
   background: rgba(255, 255, 255, 0.15);
 }
@@ -145,8 +126,22 @@ button:hover {
   margin-top: 30px;
   color: #fff;
 }
+
+select{
+  width: 100%;
+  height: 40px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: #000000;
+  border-bottom: 2px solid #000000;
+  margin: 15px 0;
+
+}
 </style>
 <body>
+  
   <div class="wrapper">
     <form action="{% url 'tryLogIn' %}" method="post">
       {% csrf_token %}

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <!-- Created By CodingLab - www.codinglabweb.com -->
 <html lang="en" dir="ltr">
@@ -22,7 +23,8 @@ body{
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: #647df9;
+  background: url("../static/back.jpg");
+  background-size: cover;
 }
 .content{
   max-width: 1090px;
@@ -38,6 +40,11 @@ body{
   text-align: center;
   padding: 15px 30px  30px 30px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+ 
+
+
+
 }
 .content .card .top{
   height: 130px;

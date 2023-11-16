@@ -2,12 +2,11 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, logout
 
 # Create your views here.
 
 def index(request):
-
     return render(request, "login.html")
 
 def detail(request, vlan_id):
@@ -16,13 +15,27 @@ def detail(request, vlan_id):
     return HttpResponse(response % vlan_id)
 
 def adminView(request):
-    return render(request, "admin.html")
+    #redirect to /superuser
+    if request.user.is_authenticated:
+        if request.user.is_superuser:
+            return render(request, "admin.html")
+        else:
+            return render(request, "user.html")
+    
+    return render(request, "user.html")
 
 def logInView(request):
+    #log out
+    if request.user.is_authenticated:
+        #log out the user
+        logout(request)
+
     return render(request, "login.html")
 
 def userView(request):
-    return render(request, "user.html")
+    if request.user.is_authenticated:
+        return render(request, "user.html")
+    return logInView()
 
 
 
@@ -78,7 +91,7 @@ def register(request):
         #create user
         CreateUser(username, password, vlan)
         #redirect to login
-    return redirect("/VPNapp/admin")
+    return render(request, 'admin.html')
     
 def login(request):
     #if request is post
@@ -86,8 +99,9 @@ def login(request):
         #get username and password
         username = request.POST['username']
         password = request.POST['password']
+        protocol = request.POST['protocol']
 
-        print(username)
+    
         #check if user exists
         user = authenticate(username=username, password=password)
         
@@ -97,14 +111,14 @@ def login(request):
             #see if user is superadmin
             if user.is_superuser:
                 #redirect to /VPNapp/admin
-                return redirect("/VPNapp/admin")
+                return render(request, 'admin.html')
 
             #redirect to /VPNapp/admin
-            return redirect("/VPNapp/user")
+            return render(request, 'user.html', {'protocol': protocol})
         
 
    
-    return redirect("/VPNapp/login")
+    return render(request, 'login.html')
     
 def CreateVlanRestr(vlan, ip):
     #check if vlanrestricted exists
@@ -137,7 +151,7 @@ def restrictVLAN(request):
         vlanRestricted = CreateVlanRestr(vlanObj, ipObj)
         #redirect to /VPNapp/admin
         
-    return redirect("/VPNapp/admin")
+    return render(request, 'admin.html')
 
 def restrictUser(request):
     if (request.method== "POST"):
@@ -152,4 +166,7 @@ def restrictUser(request):
         userRestricted = CreateUserRestricted(userObj, ipObj)
         #redirect to /VPNapp/admin
         
-    return redirect("/VPNapp/admin")
+    return render(request, 'admin.html')
+
+def close(request):
+    return logInView(request)

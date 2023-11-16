@@ -9,142 +9,114 @@
        </head>
 
        <style>
-        .header{
-            display:flex;
-            justify-content: center;
-        }
-        .header form{
-            display:flex;
-            justify-content: center;
-        }
-        .header form select{
-            width: 200px;
-            height: 30px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            padding: 5px;
-            outline: none;
-            font-size: 18px;
-            margin-right: 10px;
-        }
-        .header form input[type="submit"]{
-            width: 100px;
-            height: 30px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            padding: 5px;
-            outline: none;
-            font-size: 18px;
-            cursor: pointer;
-        }
-        .command{
-            display:flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        .command form{
-            display:flex;
-            justify-content: center;
-        }
-        .command form input[type="text"]{
-            width: 500px;
-            height: 30px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            padding: 5px;
-            outline: none;
-            font-size: 18px;
-            margin-right: 10px;
-        }
-        .command form input[type="submit"]{
-            width: 100px;
-            height: 30px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            padding: 5px;
-            outline: none;
-            font-size: 18px;
-            cursor: pointer;
-        }
-        .output{
-            display:flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        .output textarea{
-            width: 500px;
-            height: 200px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            padding: 5px;
-            outline: none;
-            font-size: 18px;
-            margin-right: 10px;
-        }
-        .close{
-            display:flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        .close form{
-            display:flex;
-            justify-content: center;
-        }
-        .close form input[type="submit"]{
-            width: 100px;
-            height: 30px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            padding: 5px;
-            outline: none;
-            font-size: 18px;
-            cursor: pointer;
-        }
-        .footer{
-            display:flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        .footer p{
-            font-size: 18px;
-        }
+       /* Google Fonts - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+/* Google Fonts - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body{
+    background-image: url("../static/back.jpg");
+    background-size: cover;
+    min-height: 95vh;
+
+}
+h2{
+    display: flex;
+    justify-content: center;
+    margin-top: 5vh;
+}
+.body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  /* background image */
+}
+.input-box {
+  position: relative;
+  height: 76px;
+  max-width: 900px;
+  width: 100%;
+  background: #fff;
+  margin: 0 20px;
+  border-radius: 8px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.input-box i,
+.input-box .button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.input-box i {
+  left: 20px;
+  font-size: 30px;
+  color: #707070;
+}
+.input-box input {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  font-size: 18px;
+  font-weight: 400;
+  border: none;
+  padding: 0 155px 0 65px;
+  background-color: transparent;
+}
+.input-box .button {
+  right: 20px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 6px;
+  background-color: #4070f4;
+  cursor: pointer;
+}
+.input-box .button:active {
+  transform: translateY(-50%) scale(0.98);
+}
+
+/* Responsive */
+@media screen and (max-width: 500px) {
+  .input-box {
+    height: 66px;
+    margin: 0 8px;
+  }
+  .input-box i {
+    left: 12px;
+    font-size: 25px;
+  }
+  .input-box input {
+    padding: 0 112px 0 50px;
+  }
+  .input-box .button {
+    right: 12px;
+    font-size: 14px;
+    padding: 8px 18px;
+  }
+}
+
 
        </style>
-
        <body>
-        <div class="header">
-           
-            <form action="#" method="POST">
-                
-                <select name="protocol" id="prot"  required>
-                    <option value="" disabled selected hidden>Select protocol</option>
-                    <option value="udp">UDP protocol</option>
-                    <option value="tcp">TCP protocol</option>
-                </select>
-                <input type="submit" name="submit" value="Start VPN">
-            </form>
-        </div>
+           <h2>Using {{protocol}} protocol </h2>
 
-        <div class="command">
-            <form action="#" method="POST">
-              
-                <input type="text" name="command" id="command" placeholder="Enter a command">
-                <input type="submit" name="submit" value="Run">
-            </form>
+       <div class="body">
+        <div class="input-box">
+            <i class="uil uil-search"></i>
+            <input type="text" placeholder="Search here..." />
+            <button class="button">Search</button>
         </div>
-
-        <div class="output">
-            <textarea name="output" id="output" cols="30" rows="10" placeholder="Result"></textarea>
-        </div>
-
-        <div class="close">
-            <form action="#" method="POST">
-                <input type="submit" name="submit" value="Close VPN">
-            </form>
-        </div>
-
-        <div class="footer">
-            <p>VPN User</p>
-        </div>
-       </body>
+        
+    </div>
+</body>
 </html>
