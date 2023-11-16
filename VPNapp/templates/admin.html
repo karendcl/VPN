@@ -149,19 +149,20 @@ background: #d0f9fb;
         </div>
         <div class="info">Register a new user in the service</div>
         <div class="details">
-            <form action="#">
+            <form action="{% url 'register' %}" method="POST">
+              {% csrf_token %}
                     <br><br>
                   <div class="input-field">
-                  <input type="text" required placeholder="Username">
+                  <input type="text" required placeholder="Username" name="username">
                   
                 </div>
                 <br>
                 <div class="input-field">
-                  <input type="password" required placeholder="Password">
+                  <input type="password" required placeholder="Password" name="password">
                 </div>
                 <br>
                 <div class="input-field">
-                    <input type="number" required placeholder="VLAN" min="1">
+                    <input type="number" required placeholder="VLAN" min="1" name="vlan">
                   </div>
                 <br><br>
                 <button type="submit">Create</button>
@@ -177,15 +178,16 @@ background: #d0f9fb;
         </div>
         <div class="info">Restrict all users that are in a VLAN from an IP_address </div>
         <div class="details">
-            <form action="#">
+            <form action="{% url 'restrictVLAN' %}" method="POST">
+              {% csrf_token %}
                 <br><br>
               <div class="input-field">
-              <input type="text" required placeholder="VLAN">
+              <input type="text" required placeholder="VLAN" name="vlan">
               
             </div>
             <br>
             <div class="input-field">
-              <input type="text" required placeholder="IP address">
+              <input type="text" required placeholder="IP address" name="ip_address">
             </div>
             <br>
             
@@ -203,15 +205,16 @@ background: #d0f9fb;
         </div>
         <div class="info">Restrict a user from an IP_address</div>
         <div class="details">
-            <form action="#">
+            <form action="{% url 'restrictUser' %}" method="post">
+              {% csrf_token %}
                 <br><br><br>
               <div class="input-field">
-              <input type="text" required placeholder="Username">
+              <input type="text" required placeholder="Username" name="username">
               
             </div>
             <br>
             <div class="input-field">
-              <input type="text" required placeholder="IP address">
+              <input type="text" required placeholder="IP address" name="ip_address">
             </div>
             <br>
             

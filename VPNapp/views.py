@@ -7,12 +7,11 @@ from django.contrib.auth import authenticate
 # Create your views here.
 
 def index(request):
-    # vlansList = VLAN.objects.order_by("vlan_id")
-    # output = ", ".join([str(v.vlan_id) for v in vlansList])
-    
+
     return render(request, "login.html")
 
-def detail(resquest, vlan_id):
+def detail(request, vlan_id):
+
     response = "You're looking at vlan %s"
     return HttpResponse(response % vlan_id)
 
@@ -25,6 +24,62 @@ def logInView(request):
 def userView(request):
     return render(request, "user.html")
 
+
+
+def CreateVLAN(vlan_id) -> VLAN:
+    #check if vlan exists
+    vlan_id = int(vlan_id)
+    if VLAN.objects.filter(vlan_id=vlan_id).exists():
+        return VLAN.objects.filter(vlan_id=vlan_id).first()
+    #create vlan
+    vlan = VLAN(vlan_id=vlan_id)
+    vlan.save()
+    return vlan
+
+def CreateUserBelongsToVLAN(user,vlan):
+    #check if user belongs to vlan exists
+    if UserBelongsToVLAN.objects.filter(user=user, vlan=vlan).exists():
+        return UserBelongsToVLAN.objects.filter(user=user, vlan=vlan).first()
+    #create user belongs to vlan
+    userBelongsToVLAN = UserBelongsToVLAN(user=user, vlan=vlan)
+    userBelongsToVLAN.save()
+    return userBelongsToVLAN
+
+def CreateUser(username, password, vlan) -> User:
+    #chech if user exists
+    if User.objects.filter(username=username).exists():
+        return User.objects.filter(username=username).first()
+    #create user
+    user = User.objects.create_user(username=username, password=password, email=None)
+    user.save()
+
+    vlanObj = CreateVLAN(vlan)
+
+    #create user belongs to vlan
+    userBelongsToVLAN = CreateUserBelongsToVLAN(user, vlanObj)
+
+    return user
+
+def CreateIP(ip_address) -> IP_address:
+    #check if ip exists
+    if IP_address.objects.filter(ip_address=ip_address).exists():
+        return IP_address.objects.filter(ip_address=ip_address).first()
+    #create ip
+    ip = IP_address(ip_address=ip_address)
+    ip.save()
+    return ip
+
+def register(request):
+    if request.method == "POST":
+        #get username and password
+        username = request.POST['username']
+        password = request.POST['password']
+        vlan = request.POST['vlan']
+        #create user
+        CreateUser(username, password, vlan)
+        #redirect to login
+    return redirect("/VPNapp/admin")
+    
 def login(request):
     #if request is post
     if request.method == "POST":
@@ -51,4 +106,50 @@ def login(request):
    
     return redirect("/VPNapp/login")
     
+def CreateVlanRestr(vlan, ip):
+    #check if vlanrestricted exists
+    if VLANRestrictedIP.objects.filter(vlan=vlan, ip_address=ip).exists():
+        return VLANRestrictedIP.objects.filter(vlan=vlan, ip_address=ip).first()
+    #create vlanrestricted
+    vlanRestricted = VLANRestrictedIP(vlan=vlan, ip_address=ip)
+    vlanRestricted.save()
+    return vlanRestricted
 
+def CreateUserRestricted(user, ip):
+    #check if userrestricted exists
+    if UserRestrictedIP.objects.filter(user=user, ip_address=ip).exists():
+        return UserRestrictedIP.objects.filter(user=user, ip_address=ip).first()
+    #create userrestricted
+    userRestricted = UserRestrictedIP(user=user, ip_address=ip)
+    userRestricted.save()
+    return userRestricted
+
+def restrictVLAN(request):
+    if (request.method== "POST"):
+        #get ipaddress and vlan
+        ip_address = request.POST['ip_address']
+        vlan = request.POST['vlan']
+        #get ip object
+        ipObj = CreateIP(ip_address)
+        #get vlan object
+        vlanObj = CreateVLAN(vlan)
+        #create user belongs to vlan
+        vlanRestricted = CreateVlanRestr(vlanObj, ipObj)
+        #redirect to /VPNapp/admin
+        
+    return redirect("/VPNapp/admin")
+
+def restrictUser(request):
+    if (request.method== "POST"):
+        #get ipaddress and vlan
+        ip_address = request.POST['ip_address']
+        user = request.POST['username']
+        #get ip object
+        ipObj = CreateIP(ip_address)
+        #get user object
+        userObj = CreateUser(user, "password", "1")
+        #create user belongs to vlan
+        userRestricted = CreateUserRestricted(userObj, ipObj)
+        #redirect to /VPNapp/admin
+        
+    return redirect("/VPNapp/admin")

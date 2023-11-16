@@ -15,6 +15,12 @@ urlpatterns = [
     path('tryLogIn/',views.login,name='tryLogIn'),
     #ex: /VPNapp/user
     path('user/',views.userView,name='user'),
+    #ex: /VPNapp/register
+    path('register/',views.register,name='register'),
+    #ex: /VPNapp/restrictVLAN
+    path('restrictVLAN/',views.restrictVLAN,name='restrictVLAN'),
+    #ex: /VPNapp/restrictUser
+    path('restrictUser/',views.restrictUser,name='restrictUser'),
 
     
 ]
