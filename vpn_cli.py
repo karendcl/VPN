@@ -1,7 +1,6 @@
-from utils import assign_ip_address
+from utils import *
 from vpn import VPN  # Import the VPN class from vpn.py
 import PySimpleGUI as sg
-
 
 # Create a VPN instance
 vpn = VPN()
@@ -24,6 +23,10 @@ def CreateUser():
                 vlan = int(values['vlan'])
                 vpn.create_user(username, password, vlan)
                 sg.PopupOK('User Created')
+                #update values
+                window['username'].Update("")
+                window['password'].Update("")
+                window['vlan'].Update("")
             except:
                 sg.PopupError("Failed to create user")
         if event=='Exit':
@@ -100,10 +103,9 @@ def RestrictVLAN():
 
 def ShowLogs():
     """Show Logs in a new window"""
-    log_text = []
+    log_text = VPNLogs()
     # Add lines from the log file to the text element
-    while not vpn.log_queue.empty():
-        log_text.append(vpn.log_queue.get())
+    
 
     # Create a scrollable Text element with the log messages
     layout = [
@@ -131,22 +133,23 @@ def main():
         [sg.Button('Create User')],
         [sg.Button('Restrict User'),sg.Button('Restrict VLAN')],
         [sg.Button('Show Logs')],
-        [sg.Button('Start'),sg.Button('Stop')]
-        
+        [sg.Button('Start VPN'),sg.Button('Stop VPN')],
+        [sg.Button('Exit')]     
     ]
     
-    window2 = sg.Window('CV', layout)
-    window2.size = (100, 100)
+    window2 = sg.Window('CV', layout, element_justification='c')
+    
+    window2.size = (200, 200)
 
     window2.Resizable = True
     while True:
         event, values = window2.read()
-        if event == sg.WIN_CLOSED :
+        if event == sg.WIN_CLOSED or event=='Exit' :
             window2.close()
             break
-        if event =='Start':
+        if event =='Start VPN':
             vpn.start()
-        if event == 'Stop':
+        if event == 'Stop VPN':
             vpn.stop()
         if event == 'Create User':
             window2.close()
@@ -160,6 +163,7 @@ def main():
         if event == 'Show Logs':
             window2.close()
             ShowLogs()
+        
 
 
 if __name__ == "__main__":
