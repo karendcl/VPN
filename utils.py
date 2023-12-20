@@ -3,17 +3,21 @@ import json
 import socket
 import struct
 import datetime
-
-
+import random
 
 def assign_ip_address():
-    ip_address = f"127.0.0.1"
-    port = random.randint(1024, 20000)
+    ip_address = f"{RandomIpSec()}.{RandomIpSec()}.{RandomIpSec()}.{RandomIpSec()}"
+    port = random.randint(10000, 20000)
     return ip_address, port
+
+def RandomIpSec():
+     """random number between 2 and 254"""
+     return str(random.randint(2,254))
 
 
 #logIn
 def logIn(username, password):
+    """Returns port, ip OR False"""
     users ={}
     try:
         with open('users.json', 'r') as f:
@@ -24,7 +28,7 @@ def logIn(username, password):
                 json.dump(users, f)
 
     if username in users and users[username]['password'] == password:
-            return users[username]['port']
+            return users[username]['port'] , users[username]['ip_address']
     else:
             return False
     

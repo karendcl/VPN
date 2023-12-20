@@ -2,9 +2,13 @@ from utils import *
 import socket
 import struct
 
-def process_data(data):
-    # ... interpret and handle data based on content ...
-    print("Process data not implemented")
+def process_data(data, res=1):
+    #return factorial of data
+    num = int(data)
+    if num <=1:
+        return res
+    res *=num
+    return process_data(num-1,res)
 
 # Create and bind raw socket
 SERVER_ADDRESS = "127.0.0.1"
@@ -39,7 +43,7 @@ while True:
         calculated_checksum = udp_checksum(sender_address, SERVER_ADDRESS, zero_checksum_header + data[28:])
 
         if received_checksum != calculated_checksum:
-            print("Checksum does not match, packet might be corrupted")
+            logMessage('Checksum does not match. Packet corrupted')
 
         # Print basic information
         print("Basic Information: ")
@@ -48,8 +52,9 @@ while True:
         print(f"Length: {length}, Checksum: {checksum}")
 
         # Process the packet
-        print("Received valid packet:", data[28:])
-        process_data(data[28:])
+        rec = data[28:].decode()
+        print("Received valid packet:", rec)
+        print(f'Factorial of {rec}: {process_data(rec)}')
     else:
         # Discard the packet
         print("Ignoring packet coming from: ", source_port)

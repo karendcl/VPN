@@ -1,1 +1,54 @@
 2023-12-17 14:23:39.886152 :  User tt created with IP address 127.0.0.1, port 22937 and vlan 1
+2023-12-20 00:07:38.401215 :  User pedro created with IP address <function RandomIpSec at 0x000002D2AF12F0A0>.<function RandomIpSec at 0x000002D2AF12F0A0>.<function RandomIpSec at 0x000002D2AF12F0A0>.<function RandomIpSec at 0x000002D2AF12F0A0>, port 18877 and vlan 5
+2023-12-20 00:11:25.374028 :  User karen created with IP address <function RandomIpSec at 0x000002D2AF12F0A0>.<function RandomIpSec at 0x000002D2AF12F0A0>.<function RandomIpSec at 0x000002D2AF12F0A0>.<function RandomIpSec at 0x000002D2AF12F0A0>, port 11354 and vlan 4
+2023-12-20 00:12:44.154559 :  User kk created with IP address 103.4.13.51, port 19154 and vlan 4
+2023-12-20 00:14:04.057328 :  User kk created with IP address 44.41.24.241, port 13971 and vlan 4
+2023-12-20 00:35:06.906248 :  User testing created with IP address 5.163.57.98, port 19596 and vlan 1
+2023-12-20 00:35:06.917348 :  User testing restricted from 11.11.11.11 IP Address
+2023-12-20 00:35:06.922248 :  Ignored packet coming from unregistered user: 19596:5.163.57.98
+2023-12-20 00:35:46.414113 :  User testing created with IP address 118.186.70.23, port 10067 and vlan 1
+2023-12-20 00:35:46.426114 :  User testing restricted from 11.11.11.11 IP Address
+2023-12-20 00:35:46.432148 :  Ignored packet coming from unregistered user: 10067:118.186.70.23
+2023-12-20 00:37:20.681009 :  User testing created with IP address 181.52.154.39, port 15616 and vlan 1
+2023-12-20 00:37:20.694038 :  User testing restricted from 11.11.11.11 IP Address
+2023-12-20 00:37:20.700012 :  Ignored packet coming from unregistered user: 15616:181.52.154.39
+2023-12-20 00:38:05.152783 :  User testing created with IP address 91.126.234.199, port 18407 and vlan 1
+2023-12-20 00:38:05.164691 :  User testing restricted from 11.11.11.11 IP Address
+2023-12-20 00:38:05.170692 :  Ignored packet coming from unregistered user: 18407:91.126.234.199
+2023-12-20 00:38:05.176279 :  Ignored packet coming from unregistered user: 18407:91.126.234.199
+2023-12-20 00:42:51.252062 :  User testing created with IP address 184.164.189.251, port 18201 and vlan 1
+2023-12-20 00:42:51.260027 :  User testing restricted from 11.11.11.11 IP Address
+2023-12-20 00:42:51.266029 :  Ignored packet coming from unregistered user: 18201:184.164.189.251
+2023-12-20 00:42:51.273025 :  Ignored packet coming from unregistered user: 18201:184.164.189.251
+2023-12-20 00:43:47.395183 :  User testing created with IP address 53.155.92.168, port 16451 and vlan 1
+2023-12-20 00:43:47.401004 :  User testing restricted from 11.11.11.11 IP Address
+2023-12-20 00:43:47.407003 :  Ignored packet coming from unregistered user: 16451:53.155.92.168
+2023-12-20 00:49:11.243610 :  User testing created with IP address 191.30.114.18, port 19595 and vlan 1
+2023-12-20 00:49:11.249729 :  User testing restricted from 11.11.11.11 IP Address
+2023-12-20 00:49:11.255675 :  Access denied for user 'testing' on port 11.11.11.11
+2023-12-20 00:50:35.096138 :  User testing created with IP address 129.110.139.119, port 14188 and vlan 1
+2023-12-20 00:50:35.103141 :  User testing restricted from 11.11.11.11 IP Address
+2023-12-20 00:50:35.108175 :  Access denied for user 'testing' on port 11.11.11.11
+2023-12-20 00:50:35.115142 :  User testing2 created with IP address 171.88.3.202, port 16023 and vlan 1
+2023-12-20 00:50:35.126721 :  All users from 1 VLAN restricted from 11.11.11.11 IP Address
+2023-12-20 00:52:17.601430 :  User testing created with IP address 28.134.114.74, port 16073 and vlan 1
+2023-12-20 00:52:17.609377 :  User testing restricted from 11.11.11.11 IP Address
+2023-12-20 00:52:17.615375 :  Access denied for user 'testing' on port 11.11.11.11
+2023-12-20 00:52:17.621684 :  User testing2 created with IP address 19.91.14.102, port 14028 and vlan 1
+2023-12-20 00:52:17.632827 :  All users from 1 VLAN restricted from 11.11.11.11 IP Address
+2023-12-20 00:56:18.085740 :  User testing created with IP address 49.67.106.254, port 12512 and vlan 1
+2023-12-20 00:56:18.092867 :  User testing restricted from 11.11.11.11 IP Address
+2023-12-20 00:56:18.100346 :  Access denied for user 'testing' on port 11.11.11.11
+2023-12-20 00:56:18.106836 :  User testing2 created with IP address 34.2.79.144, port 10783 and vlan 1
+2023-12-20 00:56:18.119675 :  All users from 1 VLAN restricted from 11.11.11.11 IP Address
+2023-12-20 00:56:34.762007 :  User testing created with IP address 17.186.5.150, port 11081 and vlan 1
+2023-12-20 00:56:34.770008 :  User testing restricted from 11.11.11.11 IP Address
+2023-12-20 00:56:34.779140 :  Access denied for user 'testing' on port 11.11.11.11
+2023-12-20 00:56:34.790010 :  User testing2 created with IP address 193.141.122.102, port 15264 and vlan 1
+2023-12-20 00:56:34.810012 :  All users from 1 VLAN restricted from 11.11.11.11 IP Address
+2023-12-20 00:57:29.252703 :  User testing created with IP address 160.227.110.164, port 15580 and vlan 1
+2023-12-20 00:57:29.259642 :  User testing restricted from 11.11.11.11 IP Address
+2023-12-20 00:57:29.264657 :  Access denied for user 'testing' on port 11.11.11.11
+2023-12-20 00:57:29.271625 :  User testing2 created with IP address 83.96.233.141, port 18722 and vlan 1
+2023-12-20 00:57:29.282704 :  All users from 1 VLAN restricted from 11.11.11.11 IP Address
+2023-12-20 00:57:29.288623 :  Restricted VLAN '1' for ip '11.11.11.11'

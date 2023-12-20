@@ -129,6 +129,8 @@ def main():
     """Main function of the program."""
     # Set up GUI layout and window
 
+    sg.theme('DarkBlue3')
+
     layout = [
         [sg.Button('Create User')],
         [sg.Button('Restrict User'),sg.Button('Restrict VLAN')],
@@ -137,9 +139,10 @@ def main():
         [sg.Button('Exit')]     
     ]
     
-    window2 = sg.Window('CV', layout, element_justification='c')
+    window2 = sg.Window('VPN', layout, element_justification='c')
     
-    window2.size = (200, 200)
+    window2.size = (400, 400)
+    
 
     window2.Resizable = True
     while True:

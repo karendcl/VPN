@@ -9,8 +9,10 @@ from utils import *
 logged = False
 username = ''
 virtualPort = 0
+virtualIp = 0
 SERVER_ADDRESS = "127.0.0.1"
-SERVER_PORT = 8000
+SERVER_PORT =8000
+REAL_DEST_PORT = 0
 
 def SendUDPpacket(message):
    
@@ -18,11 +20,8 @@ def SendUDPpacket(message):
     sock = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_UDP)
 
     # Define source and destination ports
-    SOURCE_ADDRESS = "127.0.0.1"
+    SOURCE_ADDRESS = virtualIp
     SOURCE_PORT = virtualPort
-
-    # Define real destination port and message
-    REAL_DEST_PORT = 7000
 
     # Build a string array of 10 strings that build up a coherent message
     messages = str(message).split()
@@ -30,6 +29,7 @@ def SendUDPpacket(message):
     for i in range(len(messages)):
 
         message = messages[i].encode()
+
         # Pack the real destination port before actual data
         data = struct.pack(">H", REAL_DEST_PORT) + message
 
@@ -51,11 +51,6 @@ def SendUDPpacket(message):
         sock.sendto(packet, (SERVER_ADDRESS, SERVER_PORT))
         print(f"Sent UDP packet #{i} to {SERVER_ADDRESS}:{SERVER_PORT} with real destination port {REAL_DEST_PORT}")
 
-    # Build the entire packet
-
-    # Send the packet to the server
-
-    # Close the socket
     sock.close()
 
 
@@ -67,7 +62,7 @@ def LogIn():
             [sg.Button('Login'), sg.Button('Back')]
         ]
     
-    global logged, username, virtualPort
+    global logged, username, virtualPort, virtualIp
     
     window = sg.Window('Chat Client', layout)
     while True:
@@ -76,12 +71,13 @@ def LogIn():
             break
         if event == "Login":
             try:
-                port1 = logIn(values['username1'], values['password'])
+                port1, ip1 = logIn(values['username1'], values['password'])
                 if port1 is not False:
                     virtualPort = port1
+                    virtualIp = ip1
                     username = values['username1']
                     logged = True
-                    sg.popup('Logged In')
+                    sg.popup(f'Logged In {ip1}  {port1}')
                     break
             except Exception as e:
                 sg.popup_error(e)
@@ -94,12 +90,14 @@ def LogIn():
 
 def SendMess():
 
-    global logged
+    global logged, REAL_DEST_PORT
 
     layout = [
             [sg.Text("Connected as "+ username +"\n")],
             [sg.Text('Send Message')],
-            [sg.Input(key='Message', size=(50, 1)), sg.Button('Send')],
+            [sg.Input(key='Message', size=(50, 1))],
+            [sg.Listbox(values=['Factorial','Plus 1'], key='fun', size=(20,2))],
+            [sg.Button('Send')],
             [sg.Button("LogOut", key="disconnect"), sg.Exit(key='exit')]
         ]
     
@@ -108,18 +106,24 @@ def SendMess():
     if logged==False:
         sg.popup_error('Log In First')
     else:
-    
         while True:
             event, values = window.read()
             if event == 'exit' or event== sg.WIN_CLOSED:
                 break
             if event=='Send':
                 mes = values['Message']
-                if mes is not None:
+                prt = values['fun']
+                if mes is not None and prt is not None:
+                    if prt == 'Factorial':
+                        REAL_DEST_PORT = 7000
+                    else:
+                        REAL_DEST_PORT = 7001
+                    
                     SendUDPpacket(mes)
                     window['Message'].update('')
+
                 else:
-                    sg.popup_error('Message cannot be empty')
+                    sg.popup_error('No fields can be empty')
             elif event=="disconnect":
                 logged = False
                 break
@@ -130,7 +134,7 @@ def SendMess():
 def main():
     """Main function"""
     #create MainWindow
-    sg.theme('DarkBlue9')   # Add a touch of color
+    sg.theme('DarkBlue3')   # Add a touch of color
     
     layout=[
         [sg.Button('Log In')],

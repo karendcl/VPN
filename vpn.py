@@ -12,8 +12,7 @@ class VPN:
         self.SERVER_ADDRESS = "127.0.0.1"
         self.SERVER_PORT = 8000
         self.raw_socket = None
-        restricted_vlans = {}
-        restricted_users = {}
+        
 
         if not os.path.exists('logs.txt'):
             with open('logs.txt', 'w') as f:
@@ -98,8 +97,8 @@ class VPN:
         """Boolean if user is not restricted by any means"""
 
         # Check if the sender's IP address and port are registered
-        user_data = next((user for user in self.users.values() if user['port'] == sender_port), None)
-        username = next((user for user in self.users.keys() if self.users[user]['port'] == sender_port), None)
+        user_data = next((user for user in self.users.values() if user['port'] == sender_port and user['ip_address']==sender_addr), None)
+        username = next((user for user in self.users.keys() if self.users[user]['port'] == sender_port and self.users[user]['ip_address']==sender_addr), None)
 
         if user_data is None:
             self.log_message(f"Ignored packet coming from unregistered user: {sender_addr}:{sender_port}")
@@ -113,18 +112,12 @@ class VPN:
             return False
         
         #check if vlan is not restricted
-        lst = []
-        for k, v in self.restricted_vlans.items():
-            if v["ip"] == sender_addr:
-                lst.append(k)
+        vv = {'vlan': int(user_data['vlan_id']), 'ip': dest_port}
         
-        try:
-            if dest_port in lst:
-                self.log_message(f"Restricted VLAN '{user_data['vlan_id']}' for ip '{dest_port}'")
-                return False
-        except:
-            pass
-
+        if vv in self.restricted_vlans.values():
+            self.log_message(f"Restricted VLAN '{user_data['vlan_id']}' for ip '{dest_port}'")
+            return False
+       
         # If all validations pass, return True
         return True
     
