@@ -109,7 +109,7 @@ def ShowLogs():
 
     # Create a scrollable Text element with the log messages
     layout = [
-            [sg.Listbox(log_text, size=(80,20), key="logs", enable_events=True)],
+            [sg.Listbox(log_text, size=(80,20), key="logs", enable_events=True, horizontal_scroll=True)],
             [sg.Button('Return')]
         ]
     logs_window = sg.Window('Server Logs', layout).Finalize()
