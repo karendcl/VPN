@@ -37,7 +37,7 @@ The VPN can also restrict certain users and VLANs. Restricted users are identifi
 
 Through the GUI, the VPN 'owner' can register users, restrict users and vlans, see the VPN logs in a more user-friendly way
 
-![VPN](gui.png)
+![VPN](gui.PNG)
 ![restriction](restr.png)
 ![VPN logs](logs.png)
 
