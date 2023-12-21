@@ -89,6 +89,20 @@ class VPN:
             json.dump(self.restricted_users, f)
 
         logMessage(f"User {user} restricted from {ip} IP Address")
+    
+    def unrestrict_user(self, iden):
+        """Removes an IP address from the list of restricted addresses for a given user."""
+        iden = str(iden)
+        user = self.restricted_users[iden]['User']
+        print(user)
+        ip  = self.restricted_users[iden]['Address']
+        del self.restricted_users[iden]
+        with open('restricted_users.json', 'w') as f:
+               json.dump(self.restricted_users, f)
+        logMessage(f"User {user} unrestricted from IP {ip}")
+
+
+
 
 
     def restrict_vlan(self, vlan_id, ip):

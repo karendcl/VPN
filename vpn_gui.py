@@ -166,6 +166,48 @@ def ShowLogs():
     else:
         main()
 
+def DeleteRestrictionByUser():
+    """Create a Window for deleting restriction by user"""
+    allRestrictions = list(vpn.restricted_users.values())
+
+    for i in range(len(allRestrictions)):
+        user =allRestrictions[i]['User']
+        ip = allRestrictions[i]['Address']
+        allRestrictions[i] = f'User {user} restricted from {ip}'
+
+    deleted = False
+    layout=[
+        [sg.Text('Restriction to Delete:')],
+        [sg.Listbox(values=allRestrictions, key='name', size=(25,6), enable_events=True)],
+        [sg.Button('Delete Restriction',bind_return_key=True)],
+        [sg.Button('Go Back')]
+    ]
+    restricted_window = sg.Window('Restricted Area',layout, return_keyboard_events=True)
+    
+    while True:
+        event, values = restricted_window.read()
+        if event=='Delete Restriction':
+            try:
+                name = values["name"][0]
+                index = allRestrictions.index(name) +1
+                print(index)
+                vpn.unrestrict_user(index)
+                sg.PopupOK('Restriction Deleted')
+                deleted=True
+                break
+            except Exception as e:
+                sg.PopupError(f'Error {e}')
+        elif event=='Go Back':
+            break
+        if event == sg.WIN_CLOSED:
+            break
+    
+    restricted_window.close()
+    if deleted:
+        DeleteRestrictionByUser()
+    else:
+        main()
+
 def main():
 
     """Main function of the program."""
@@ -176,6 +218,8 @@ def main():
     layout = [
         [sg.Button('Create User'), sg.Button('Delete User')],
         [sg.Button('Restrict User'),sg.Button('Restrict VLAN')],
+        [sg.Button('Delete Restriction By Username')],
+        [sg.Button('Delete Restriction by VLAN')],
         [sg.Button('Show Logs')],
         [sg.Button('Start VPN'),sg.Button('Stop VPN')],
         [sg.Button('Exit')]     
@@ -211,6 +255,12 @@ def main():
         if event == 'Delete User':
             window2.close()
             DeleteUser()
+        if event == 'Delete Restriction By Username':
+            window2.close()
+            DeleteRestrictionByUser()
+        if event == 'Delete Restriction by VLAN':
+            window2.close()
+            DeleteRestrictionByVLAN()
         
 
 
