@@ -21,7 +21,7 @@ The project consists of the following files:
 
 Firstly the client logs in, and only then it can use the VPN service. The client creates a raw socket and sends a UDP packet to the VPN. The packet contains a message and the real destination port. The client calculates the UDP checksum and includes it in the UDP header.
 
-![Client](cl.PNG)
+![Client](cl.png)
 
 ### `fact.py` and `plus_one.py`
 
@@ -38,8 +38,8 @@ The VPN can also restrict certain users and VLANs. Restricted users are identifi
 Through the GUI, the VPN 'owner' can register users, restrict users and vlans, see the VPN logs in a more user-friendly way
 
 ![VPN](gui.PNG)
-![restriction](restr.PNG)
-![VPN logs](logs.PNG)
+![restriction](restr.png)
+![VPN logs](logs.png)
 
 ### `utils.py`
 
