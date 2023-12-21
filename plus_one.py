@@ -4,8 +4,11 @@ import struct
 
 def process_data(data):
     #return data+1
-    num = int(data)
-    return num+1
+    try:
+        num = int(data)
+        return num+1
+    except:
+        print(f'Received {data}, could not convert to a number')
 
 # Create and bind raw socket
 SERVER_ADDRESS = "127.0.0.1"

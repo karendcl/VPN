@@ -6,6 +6,7 @@ import datetime
 import random
 
 def assign_ip_address():
+    """Return ip , port assigned to the user"""
     ip_address = f"{RandomIpSec()}.{RandomIpSec()}.{RandomIpSec()}.{RandomIpSec()}"
     port = random.randint(10000, 20000)
     return ip_address, port
@@ -13,7 +14,6 @@ def assign_ip_address():
 def RandomIpSec():
      """random number between 2 and 254"""
      return str(random.randint(2,254))
-
 
 #logIn
 def logIn(username, password):
@@ -47,14 +47,13 @@ def logMessage(message):
      #get current datetime
      now = datetime.datetime.now()
 
-
      with open("logs.txt","a+") as file:
           file.write(str(now) + ' :  ' + str(message) + '\n')
 
 
             
-
 def udp_checksum(source_ip, dest_ip, udp_packet):
+    """Calculate checksum of a udp packet"""
     pseudo_header = struct.pack('!4s4sBBH',
                                 socket.inet_aton(source_ip),
                                 socket.inet_aton(dest_ip),
@@ -65,6 +64,7 @@ def udp_checksum(source_ip, dest_ip, udp_packet):
 
 
 def calc_checksum(packet):
+    """Calculate checksum of a packet"""
     if len(packet) % 2 != 0:
         packet += b'\0'
     res = sum((int.from_bytes(packet[i:i + 2], 'big') for i in range(0, len(packet), 2)))
