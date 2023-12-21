@@ -32,6 +32,8 @@ data = struct.pack(">H", REAL_DEST_PORT) + message
 #unpack
 real_port = struct.unpack(">H", data[:2])[0]
 print(real_port)
-data = data[2:]
-print(data.decode())
+SOURCE_ADDRESS = data[2:].decode().split('#')[0]
+print(SOURCE_ADDRESS)
+
+print(':'.join([SOURCE_ADDRESS,str(real_port)] ))
 

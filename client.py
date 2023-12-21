@@ -27,10 +27,9 @@ def SendUDPpacket(message):
     messages = str(message).split()
 
     for i in range(len(messages)):
-
+        # Pack the fake IP address into the message
         message = SOURCE_ADDRESS + '#'+ message[i]
         message = message.encode()
-
 
         # Pack the real destination port before actual data
         data = struct.pack(">H", REAL_DEST_PORT) + message

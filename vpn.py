@@ -12,6 +12,7 @@ class VPN:
         self.SERVER_ADDRESS = "127.0.0.1"
         self.SERVER_PORT = 8000
         self.raw_socket = None
+        self.tabla = {}
         
 
         if not os.path.exists('logs.txt'):
@@ -146,13 +147,14 @@ class VPN:
                 if dest_port == self.SERVER_PORT:
 
                     # Sender port is always 0 because it sends directly through the interface
-                    sender_addr, sender_port = addr
-
-                    # Check if the user is created and not restricted
+                    real_sender_addr, real_sender_port = addr
 
                     sender_addr = data[30:].decode().split('#')[0]
 
+                   #save into a dictionary the fake ip and port that belongs to the real user
+                    self.tabla[':'.join([str(real_sender_addr),str(real_sender_port)])]  =  ':'.join([str(sender_addr),str(source_port)]) 
                     
+                    # Check if the user is created and not restricted
                     if not self.validate_user(sender_addr, source_port, dest_port):
                         continue
 
