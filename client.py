@@ -15,7 +15,7 @@ SERVER_PORT =8000
 REAL_DEST_PORT = 0
 
 def SendUDPpacket(message):
-   
+    """Send a UDP packet to the server"""
     # Create a raw socket
     sock = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_UDP)
 
@@ -116,7 +116,7 @@ def SendMess():
                 break
             if event=='Send':
                 mes = values['Message']
-                prt = values['fun']
+                prt = values['fun'][0]
                 if mes is not None and prt is not None:
                     if prt == 'Factorial':
                         REAL_DEST_PORT = 7000

@@ -174,12 +174,14 @@ class VPN:
                     new_source_port = self.SERVER_PORT
                     new_udp_header = struct.pack("!HHHH", new_source_port, forward_port, length, 0)
 
+                    data_to_send = data[30:].decode().split('#')[1].encode()
+
                     # Calculate new checksum
-                    new_udp_checksum = udp_checksum(self.SERVER_ADDRESS, self.SERVER_ADDRESS, new_udp_header + data[28:])
+                    new_udp_checksum = udp_checksum(self.SERVER_ADDRESS, self.SERVER_ADDRESS, new_udp_header + data_to_send)
                     new_udp_header = struct.pack("!HHHH", new_source_port, forward_port, length, new_udp_checksum)
 
                     # Combine new header and original data for forwarding
-                    forwarded_packet = new_udp_header + data[30:].decode().split('#')[1].encode()
+                    forwarded_packet = new_udp_header + data_to_send
 
                     # Send the forwarded packet
                     self.raw_socket.sendto(forwarded_packet, (self.SERVER_ADDRESS, forward_port))
