@@ -52,3 +52,24 @@
 2023-12-20 00:57:29.271625 :  User testing2 created with IP address 83.96.233.141, port 18722 and vlan 1
 2023-12-20 00:57:29.282704 :  All users from 1 VLAN restricted from 11.11.11.11 IP Address
 2023-12-20 00:57:29.288623 :  Restricted VLAN '1' for ip '11.11.11.11'
+2023-12-21 16:13:16.026128 :  User Drackaro created with IP address 12.126.37.34, port 16561 and vlan 69
+2023-12-21 16:13:57.735254 :  Forwarded packet coming from 12.126.37.34:16561 to 127.0.0.1:7000
+2023-12-21 16:13:57.765712 :  Ignored packet coming from 8000
+2023-12-21 16:14:09.627662 :  Forwarded packet coming from 12.126.37.34:16561 to 127.0.0.1:7001
+2023-12-21 16:14:09.727614 :  Ignored packet coming from 8000
+2023-12-21 16:14:13.380228 :  Forwarded packet coming from 12.126.37.34:16561 to 127.0.0.1:7000
+2023-12-21 16:14:13.416835 :  Ignored packet coming from 8000
+2023-12-21 16:14:18.537627 :  Forwarded packet coming from 12.126.37.34:16561 to 127.0.0.1:7001
+2023-12-21 16:14:18.564311 :  Ignored packet coming from 8000
+2023-12-21 16:14:23.974264 :  Forwarded packet coming from 12.126.37.34:16561 to 127.0.0.1:7001
+2023-12-21 16:14:24.009106 :  Ignored packet coming from 8000
+2023-12-21 16:14:31.195273 :  Forwarded packet coming from 12.126.37.34:16561 to 127.0.0.1:7000
+2023-12-21 16:14:31.220126 :  Ignored packet coming from 8000
+2023-12-21 16:14:36.635651 :  Forwarded packet coming from 12.126.37.34:16561 to 127.0.0.1:7000
+2023-12-21 16:14:36.654558 :  Ignored packet coming from 8000
+2023-12-21 16:15:15.730626 :  Forwarded packet coming from 12.126.37.34:16561 to 127.0.0.1:7000
+2023-12-21 16:15:15.769347 :  Ignored packet coming from 8000
+2023-12-21 16:15:23.798632 :  Forwarded packet coming from 12.126.37.34:16561 to 127.0.0.1:7000
+2023-12-21 16:15:23.829408 :  Ignored packet coming from 8000
+2023-12-21 16:15:29.615973 :  Forwarded packet coming from 12.126.37.34:16561 to 127.0.0.1:7000
+2023-12-21 16:15:29.637524 :  Ignored packet coming from 8000
