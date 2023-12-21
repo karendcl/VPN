@@ -51,6 +51,10 @@ def logMessage(message):
           file.write(str(now) + ' :  ' + str(message) + '\n')
 
 
+def clearLogs():
+    """Clear logs.txt file"""
+    with open('logs.txt', 'w') as f:
+        pass
             
 def udp_checksum(source_ip, dest_ip, udp_packet):
     """Calculate checksum of a udp packet"""

@@ -71,6 +71,13 @@ class VPN:
 
         self.log_message(f"User {username} created with IP address {ip_address}, port {port} and vlan {vlan_id}")
 
+    def delete_user(self,user):
+        """Deletes a user from the list of users."""
+        del self.users[user]
+        with open('users.json', 'w') as f:
+            json.dump(self.users, f)
+
+        logMessage(f"User {user} deleted")
 
     def restrict_user(self, user, ip):
         """Adds an IP address to the list of restricted addresses for a given user."""
