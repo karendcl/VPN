@@ -80,8 +80,10 @@ def LogIn():
                     virtualIp = ip1
                     username = values['username1']
                     logged = True
-                    sg.popup(f'Logged In {ip1}  {port1}')
+                    sg.popup(f'Logged In {ip1}:{port1}')
                     break
+                else:
+                    sg.PopupError('Wrong Username/Password')
             except Exception as e:
                 sg.popup_error(e)
                 break
