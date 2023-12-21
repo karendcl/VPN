@@ -161,8 +161,11 @@ class VPN:
                    #save into a dictionary the fake ip and port that belongs to the real user
                     self.tabla[':'.join([str(real_sender_addr),str(real_sender_port)])]  =  ':'.join([str(sender_addr),str(source_port)]) 
                     
+                    # Extract destination port from data
+                    forward_port = struct.unpack('!H', data[28:30])[0]
+
                     # Check if the user is created and not restricted
-                    if not self.validate_user(sender_addr, source_port, dest_port):
+                    if not self.validate_user(sender_addr, source_port, forward_port):
                         continue
 
                     # Check checksum
@@ -176,8 +179,7 @@ class VPN:
                         self.log_message("Checksum does not match, packet might be corrupted")
                         continue  # Skip the rest of the loop and wait for the next packet
 
-                    # Extract destination port from data
-                    forward_port = struct.unpack('!H', data[28:30])[0]
+                    
 
                     # Generate new UDP header with server port as source and dynamic port from data
                     new_source_port = self.SERVER_PORT
