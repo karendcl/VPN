@@ -9,7 +9,7 @@ from utils import *
 logged = False
 username = ''
 virtualPort = 0
-virtualIp = 0
+virtualIp = ''
 SERVER_ADDRESS = "127.0.0.1"
 SERVER_PORT =8000
 REAL_DEST_PORT = 0
@@ -28,12 +28,16 @@ def SendUDPpacket(message):
 
     for i in range(len(messages)):
 
-        message = messages[i].encode()
+        message = SOURCE_ADDRESS + '#'+ message[i]
+        message = message.encode()
+
 
         # Pack the real destination port before actual data
         data = struct.pack(">H", REAL_DEST_PORT) + message
+     
 
         # Build the UDP header
+        
         udp_header = struct.pack("!HHHH", SOURCE_PORT, SERVER_PORT, 8 + len(data), 0)
 
         # Calculate checksum

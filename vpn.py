@@ -149,6 +149,10 @@ class VPN:
                     sender_addr, sender_port = addr
 
                     # Check if the user is created and not restricted
+
+                    sender_addr = data[30:].decode().split('#')[0]
+
+                    
                     if not self.validate_user(sender_addr, source_port, dest_port):
                         continue
 
@@ -175,7 +179,7 @@ class VPN:
                     new_udp_header = struct.pack("!HHHH", new_source_port, forward_port, length, new_udp_checksum)
 
                     # Combine new header and original data for forwarding
-                    forwarded_packet = new_udp_header + data[28:]
+                    forwarded_packet = new_udp_header + data[30:].decode().split('#')[1].encode()
 
                     # Send the forwarded packet
                     self.raw_socket.sendto(forwarded_packet, (self.SERVER_ADDRESS, forward_port))
