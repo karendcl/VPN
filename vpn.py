@@ -81,6 +81,13 @@ class VPN:
 
     def restrict_user(self, user, ip):
         """Adds an IP address to the list of restricted addresses for a given user."""
+
+        #check that it is not already a restriction
+        uu = {'User': user, 'Address': ip}
+        if uu in self.restricted_users.values():
+            raise Exception("User is already restricted")
+        
+
         key = len(self.restricted_users)+1
        
         self.restricted_users[key] = {"User": user, "Address": ip}
@@ -90,29 +97,38 @@ class VPN:
 
         logMessage(f"User {user} restricted from {ip} IP Address")
     
-    def unrestrict_user(self, iden):
+    def unrestrict_user(self, user, ip):
         """Removes an IP address from the list of restricted addresses for a given user."""
-        iden = str(iden)
-        user = self.restricted_users[iden]['User']
-        print(user)
-        ip  = self.restricted_users[iden]['Address']
-        del self.restricted_users[iden]
+        uu = {'User': user, 'Address': ip}
+        index = [i for i in self.restricted_users.keys() if self.restricted_users[i] == uu][0]
+        del self.restricted_users[index]
         with open('restricted_users.json', 'w') as f:
-               json.dump(self.restricted_users, f)
+            json.dump(self.restricted_users, f)
         logMessage(f"User {user} unrestricted from IP {ip}")
-
-
-
-
 
     def restrict_vlan(self, vlan_id, ip):
         """Adds an IP address to the VLAN restriction list."""
+
+        #check that it is not already a restriction
+        vv = {'vlan': vlan_id, 'ip': ip}
+        if vv in self.restricted_vlans.values():
+            raise Exception("VLAN is already restricted")
+        
         key = len(self.restricted_vlans)+1
         self.restricted_vlans[key] = {'vlan': vlan_id, 'ip': ip}
         with open('restricted_vlans.json', 'w') as f:
             json.dump(self.restricted_vlans, f)
 
         logMessage(f"All users from {vlan_id} VLAN restricted from {ip} IP Address")
+    
+    def unrestrict_vlan(self, vlan, ip):
+        """Removes an IP address from the VLAN restriction list."""
+        vv = {'vlan': vlan, 'ip': ip}
+        index = [i for i in self.restricted_vlans.keys() if self.restricted_vlans[i] == vv][0]
+        del self.restricted_vlans[index]
+        with open('restricted_vlans.json', 'w') as f:
+            json.dump(self.restricted_vlans, f)
+        logMessage(f"All users from {vlan} VLAN unrestricted from IP {ip}")
 
 
     def validate_user(self, sender_addr, sender_port, dest_port):

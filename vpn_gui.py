@@ -169,16 +169,17 @@ def ShowLogs():
 def DeleteRestrictionByUser():
     """Create a Window for deleting restriction by user"""
     allRestrictions = list(vpn.restricted_users.values())
+    toShow = allRestrictions.copy()
 
     for i in range(len(allRestrictions)):
         user =allRestrictions[i]['User']
         ip = allRestrictions[i]['Address']
-        allRestrictions[i] = f'User {user} restricted from {ip}'
+        toShow[i] = f'User {user} restricted from {ip}'
 
     deleted = False
     layout=[
         [sg.Text('Restriction to Delete:')],
-        [sg.Listbox(values=allRestrictions, key='name', size=(25,6), enable_events=True)],
+        [sg.Listbox(values=toShow, key='name', size=(50,6), enable_events=True, horizontal_scroll=True)],
         [sg.Button('Delete Restriction',bind_return_key=True)],
         [sg.Button('Go Back')]
     ]
@@ -189,9 +190,12 @@ def DeleteRestrictionByUser():
         if event=='Delete Restriction':
             try:
                 name = values["name"][0]
-                index = allRestrictions.index(name) +1
-                print(index)
-                vpn.unrestrict_user(index)
+                index = toShow.index(name)
+               
+                user = allRestrictions[index]['User']
+                ip = allRestrictions[index]['Address']
+        
+                vpn.unrestrict_user(user,ip)
                 sg.PopupOK('Restriction Deleted')
                 deleted=True
                 break
@@ -205,6 +209,52 @@ def DeleteRestrictionByUser():
     restricted_window.close()
     if deleted:
         DeleteRestrictionByUser()
+    else:
+        main()
+
+def DeleteRestrictionByVLAN():
+    """Create a Window for deleting restriction by VLAN"""
+    allRestrictions = list(vpn.restricted_vlans.values())
+    toShow = allRestrictions.copy()
+
+    for i in range(len(allRestrictions)):
+        vlan =allRestrictions[i]['vlan']
+        ip = allRestrictions[i]['ip']
+        toShow[i] = f'VLAN {vlan} restricted from {ip}'
+
+    deleted = False
+    layout=[
+        [sg.Text('Restriction to Delete:')],
+        [sg.Listbox(values=toShow, key='name', size=(50,6), enable_events=True, horizontal_scroll=True)],
+        [sg.Button('Delete Restriction',bind_return_key=True)],
+        [sg.Button('Go Back')]
+    ]
+    restricted_window = sg.Window('Restricted Area',layout, return_keyboard_events=True)
+    
+    while True:
+        event, values = restricted_window.read()
+        if event=='Delete Restriction':
+            try:
+                name = values["name"][0]
+                index = toShow.index(name)
+               
+                vlan = allRestrictions[index]['vlan']
+                ip = allRestrictions[index]['ip']
+        
+                vpn.unrestrict_vlan(vlan,ip)
+                sg.PopupOK('Restriction Deleted')
+                deleted=True
+                break
+            except Exception as e:
+                sg.PopupError(f'Error {e}')
+        elif event=='Go Back':
+            break
+        if event == sg.WIN_CLOSED:
+            break
+    
+    restricted_window.close()
+    if deleted:
+        DeleteRestrictionByVLAN()
     else:
         main()
 
