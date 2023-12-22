@@ -3,12 +3,13 @@ import socket
 import struct
 
 def process_data(data):
-    #return data+1
+    """Return number +1"""
     try:
         num = int(data)
         return num+1
-    except:
-        print(f'Received {data}, could not convert to a number')
+    except Exception as e:
+        print(f'Error: {e}')
+
 
 # Create and bind raw socket
 SERVER_ADDRESS = "127.0.0.1"
