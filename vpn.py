@@ -251,7 +251,7 @@ class VPN:
                         f" {self.SERVER_ADDRESS}:{forward_port} disguised as {sender_addr}:{source_port}")
                 else:
                     # Discard the packet
-                    self.log_message(f"Ignored packet meant for port {dest_port}
+                    self.log_message(f"Ignored packet meant for port {dest_port}")
             except AttributeError:
                 if self.raw_socket is None:
                     break

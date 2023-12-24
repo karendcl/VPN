@@ -13,7 +13,7 @@ def process_data(data):
 
 # Create and bind raw socket
 SERVER_ADDRESS = "127.0.0.1"
-SERVER_PORT = 7000
+SERVER_PORT = 7001
 raw_socket = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_UDP)
 raw_socket.bind(('localhost', SERVER_PORT))
 
@@ -62,7 +62,7 @@ while True:
         print("Received valid packet:", data)
         try:
             res = process_data(data)
-            print(f'Factorial of {data} is {res}')
+            print(f'Plus one of {data} is {res}')
         except:
             pass
     else:
