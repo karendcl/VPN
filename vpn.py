@@ -224,8 +224,6 @@ class VPN:
                         self.log_message("Checksum does not match, packet might be corrupted")
                         continue  # Skip the rest of the loop and wait for the next packet
 
-                    
-
                     # Generate new UDP header with server port as source and dynamic port from data
                     new_source_port = self.SERVER_PORT
                     new_udp_header = struct.pack("!HHHH", source_port, forward_port, length, 0)

@@ -18,6 +18,7 @@ raw_socket = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_UDP)
 raw_socket.bind(('localhost', SERVER_PORT))
 
 while True:
+    corrupted = False
     # Receive data
     data, addr = raw_socket.recvfrom(65535)
 
@@ -44,7 +45,7 @@ while True:
         calculated_checksum = udp_checksum(sender_address, SERVER_ADDRESS, zero_checksum_header + data[28:])
 
         if received_checksum != calculated_checksum:
-            logMessage('Checksum does not match. Packet corrupted')
+            corrupted = True
 
         # Process the packet
         rec = data[28:].decode()
@@ -58,7 +59,8 @@ while True:
         print("Basic Information: ")
         print(f"UDP packet received from {address}:{source_port}")
         print(f"Length: {length}, Checksum: {checksum}")
-        print("Received valid packet:", data)
+        print("Received valid packet:", data) if (corrupted == False) else print(f'Received corrupted packet: {data}')
+        corrupted = False
         try:
             res = process_data(data)
             print(f'Plus one of {data} is {res}')
