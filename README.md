@@ -10,7 +10,7 @@ The project consists of the following files:
 
 - `client.py`: This file contains the code for the client that sends packets to the VPN, through a GUI.
 - `fact.py`: This file contains the code for a server that receives packets from the VPN and calculates the factorial of the message.
-- `plus_one.py`: This file contains the code for a server that receives packets from the VPN and adds 1 to the message. 
+- `plus_one.py`: This file contains the code for a server that receives packets from the VPN and adds 1 to the message.
 - `vpn.py`: This file contains the code for the VPN that forwards packets from the client to the server.
 - `vpn_gui.py`: This file provides a GUI to interact with the VPN.
 - `utils.py`: This file contains utility functions like: assigning ip addresses and ports, logging the users in, calculating checksums and logging messages.
@@ -21,7 +21,7 @@ The project consists of the following files:
 
 Firstly the client logs in, and only then it can use the VPN service. The client creates a raw socket and sends a UDP packet to the VPN. The packet contains a message and the real destination port. The client calculates the UDP checksum and includes it in the UDP header.
 
-![Client](cl.png)
+![Client](cl.png#aligncenter)
 
 ### `fact.py` and `plus_one.py`
 

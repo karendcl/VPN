@@ -59,26 +59,37 @@ def SendUDPpacket(message):
 
 def LogIn():
     layout = [
-            [sg.Text("\n\nPlease log in first:\n")],
-            [sg.Text('Username'), sg.Input(key='username1')],
-            [sg.Text('Password'), sg.Input(password_char='*', key='password')],
-            [sg.Button('Login'), sg.Button('Back')]
+            [[sg.Text("")]],
+            [sg.Text('ViPeN', font=('Helvetica',42))],
+            [sg.Text("Please log in first:\n")],
+            [sg.Text('Username',size=(10,1),expand_x=True), sg.Input(key='username',size=(30,1))],
+            [sg.Text('Password',size=(10,1),expand_x=True), sg.Input(password_char='*', key='password',size=(30,1))],
+            [[sg.Text("")]],
+            [sg.Button('Login'), sg.Button('Back')],
+            [[sg.Text("")]]
         ]
     
     global logged, username, virtualPort, virtualIp
     
-    window = sg.Window('Chat Client', layout)
+    window = sg.Window('Chat Client', layout,element_justification='c')
     while True:
         event, values = window.read()
         if event == 'exit' or event== sg.WIN_CLOSED:
             break
         if event == "Login":
             try:
-                port1, ip1 = logIn(values['username1'], values['password'])
+                username = values['username']
+                if(username==''):
+                    sg.PopupOK("Please introduce user name")
+                    continue
+                password = values['password']
+                if(password==''):
+                    sg.PopupOK("Please introduce password")
+                    continue
+                port1, ip1 = logIn(username, password)
                 if port1 is not False:
                     virtualPort = port1
                     virtualIp = ip1
-                    username = values['username1']
                     logged = True
                     sg.popup(f'Logged In {ip1}:{port1}')
                     break
@@ -98,15 +109,18 @@ def SendMess():
     global logged, REAL_DEST_PORT
 
     layout = [
+            [[sg.Text("")]],
+            [sg.Text('ViPeN', font=('Helvetica',42))],
             [sg.Text("Connected as "+ username +"\n")],
             [sg.Text('Send Message')],
-            [sg.Input(key='Message', size=(50, 1))],
+            [sg.Input(key='Message', size=(20, 4))],
             [sg.Listbox(values=['Factorial','Plus 1'], key='fun', size=(20,2))],
-            [sg.Button('Send')],
-            [sg.Button("LogOut", key="disconnect"), sg.Exit(key='exit')]
+            [[sg.Text("")]],
+            [sg.Button('Send'),sg.Button("LogOut", key="disconnect"), sg.Exit(key='exit')],
+            [[sg.Text("")]]
         ]
     
-    window = sg.Window('Chat Client', layout)
+    window = sg.Window('Chat Client', layout,element_justification='c')
 
     if logged==False:
         sg.popup_error('Log In First')
@@ -139,15 +153,18 @@ def SendMess():
 def main():
     """Main function"""
     #create MainWindow
-    sg.theme('DarkBlue3')   # Add a touch of color
+    sg.theme('DarkAmber')   # Add a touch of color
+    sg.set_options(font=('Arial Bold',18))
     
     layout=[
-        [sg.Button('Log In')],
-        [sg.Button('Send Message')],
-        [sg.Button('Exit')]
+        [[sg.Text("")]],
+        [sg.Text('  Welcome to ViPeN  ', font=('Helvetica',42))],
+        [sg.Text("The best V.P.N. in the market\n",font=('Arial',18))],
+        [sg.Button('Log In'),sg.Button('Send Message'),sg.Button('Exit')],
+        [[sg.Text("")]]
     ]
     
-    window = sg.Window('Chat Client', layout)
+    window = sg.Window('Chat Client', layout,element_justification='c')
     while True:
         event, values = window.read()
         if event == 'Exit' or event== sg.WIN_CLOSED:

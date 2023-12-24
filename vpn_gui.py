@@ -8,29 +8,45 @@ vpn = VPN()
 def CreateUser():
     """Create a window to input a user"""
     layout = [
-        [sg.Text('Username:'), sg.Input(key='username')],
-        [sg.Text('Password:'), sg.Input(key='password')],
-        [sg.Text('VLAN:'), sg.Input(key='vlan')],
-        [sg.Button('Submit', bind_return_key=True), sg.Cancel('Exit')]
+        [sg.Text('')],
+        [sg.Text('ViPeN', font=('Helvetica',42))],
+        [sg.Text("Create User",font=('Arial',18))],
+        [sg.Text('Username:',size=(15,1),expand_x=True), sg.Input(key='username')],
+        [sg.Text('Password:',size=(15,1),expand_x=True), sg.Input(key='password',password_char='*')],
+        [sg.Text('Check password:',size=(15,1),expand_x=True), sg.Input(key='Check',password_char='*')],
+        [sg.Text('VLAN:',size=(15,1),expand_x=True), sg.Input(key='vlan')],
+        [sg.Text('')],
+        [sg.Button('Submit', bind_return_key=True), sg.Cancel('Exit')],
+        [sg.Text('')]
         ]
-    window = sg.Window('VPN User Creator', layout, return_keyboard_events=True)
+    window = sg.Window('VPN User Creator', layout, return_keyboard_events=True,element_justification='c')
     while True:
         event, values = window.Read()
         if event == 'Submit':
             try:
                 username = values['username']
-                
                 if(list(vpn.users).__contains__(username)):
-                    sg.PopupError("El usuario ya existe")
+                    sg.PopupOK("The user already exist!!")
+                    continue
+                if(username==''):
+                    sg.PopupOK("Please introduce user name")
                     continue
                 
                 password = values['password']
+                if(password==''):
+                    sg.PopupOK("Please introduce password")
+                    continue
+                if(values['Check']!=password):
+                    sg.PopupOK("The password doesn't match")
+                    continue
+                
                 vlan = int(values['vlan'])
                 vpn.create_user(username, password, vlan)
                 sg.PopupOK('User Created')
                 #update values
                 window['username'].Update("")
                 window['password'].Update("")
+                window['Check'].Update("")
                 window['vlan'].Update("")
             except Exception as e:
                 sg.PopupError(f'Error {e}')
@@ -41,20 +57,21 @@ def CreateUser():
     window.Close()
     main()
 
-
 def RestrictUser():
     """Create a Window to restrict user"""
 
     allUsers = list(vpn.users)
     layout=[
+        [sg.Text('')],
+        [sg.Text('ViPeN', font=('Helvetica',42))],
         [sg.Text('Username to restrict:')],
         [sg.Listbox(values=allUsers, key='name', size=(25,6), enable_events=True)],
-        [sg.Text('IP Address:')],
-        [sg.Input(key="ip", size=(20,1))],
-        [sg.Button('Restrict Access',bind_return_key=True)],
-        [sg.Button('Go Back')]
+        [sg.Text('IP Address:'),sg.Input(key="ip", size=(15,1))],
+        [sg.Text('')],
+        [sg.Button('Restrict Access',bind_return_key=True),sg.Button('Go Back')],
+        [sg.Text('')]
     ]
-    restricted_window = sg.Window('Restricted Area',layout, return_keyboard_events=True)
+    restricted_window = sg.Window('Restricted Area',layout, return_keyboard_events=True,element_justification='c')
     
     while True:
         event, values = restricted_window.Read()
@@ -74,18 +91,20 @@ def RestrictUser():
     restricted_window.close()
     main()
 
-
 def DeleteUser():
     """Create a Window for deleting users"""
     allUsers = list(vpn.users)
     deleted = False
     layout=[
+        [sg.Text('')],
+        [sg.Text('ViPeN', font=('Helvetica',42))],
         [sg.Text('Username to delete:')],
         [sg.Listbox(values=allUsers, key='name', size=(25,6), enable_events=True)],
-        [sg.Button('Delete User',bind_return_key=True)],
-        [sg.Button('Go Back')]
+        [sg.Text('')],
+        [sg.Button('Delete User',bind_return_key=True),sg.Button('Go Back')],
+        [sg.Text('')]
     ]
-    restricted_window = sg.Window('Restricted Area',layout, return_keyboard_events=True)
+    restricted_window = sg.Window('Restricted Area',layout, return_keyboard_events=True,element_justification='c')
     
     while True:
         event, values = restricted_window.read()
@@ -112,14 +131,18 @@ def DeleteUser():
 def RestrictVLAN():
     """Create a Window for VLAN restriction"""
     layout=[
+        [sg.Text('')],
+        [sg.Text('ViPeN', font=('Helvetica',42))],
         [sg.Text('Enter the VLAN to restrict')],
         [sg.Input(key='vlans',size=(35,1),enable_events=True)],
         [sg.Text('Enter the IP address')],
-        [sg.Input(key='ips',size=(40,6))],
-        [sg.Button('Restrict'), sg.Button('Return')]
+        [sg.Input(key='ips',size=(35,1))],
+        [sg.Text('')],
+        [sg.Button('Restrict'), sg.Button('Return')],
+        [sg.Text('')]
     ]
   
-    restricted_window = sg.Window('Restricted Area',layout, return_keyboard_events=True)
+    restricted_window = sg.Window('Restricted Area',layout, return_keyboard_events=True,element_justification='c')
     
     while True:
         event, values = restricted_window.Read()
@@ -139,8 +162,6 @@ def RestrictVLAN():
     restricted_window.close()
     main()
 
-
-
 def ShowLogs():
     """Show Logs in a new window"""
     cleared = False
@@ -150,10 +171,11 @@ def ShowLogs():
 
     # Create a scrollable Text element with the log messages
     layout = [
+            [sg.Text('ViPeN', font=('Helvetica',42))],
             [sg.Listbox(log_text, size=(80,20), key="logs", enable_events=True, horizontal_scroll=True)],
             [sg.Button('Return'), sg.Button('Clear Logs')]
         ]
-    logs_window = sg.Window('Server Logs', layout).Finalize()
+    logs_window = sg.Window('Server Logs', layout,element_justification='c').Finalize()
     while True:
         event, _ = logs_window.Read()
         if event == 'Return':
@@ -183,12 +205,15 @@ def DeleteRestrictionByUser():
 
     deleted = False
     layout=[
+        [sg.Text('')],
+        [sg.Text('ViPeN', font=('Helvetica',42))],
         [sg.Text('Restriction to Delete:')],
         [sg.Listbox(values=toShow, key='name', size=(50,6), enable_events=True, horizontal_scroll=True)],
-        [sg.Button('Delete Restriction',bind_return_key=True)],
-        [sg.Button('Go Back')]
+        [sg.Text('')],
+        [sg.Button('Delete Restriction',bind_return_key=True),sg.Button('Go Back')],
+        [sg.Text('')]
     ]
-    restricted_window = sg.Window('Restricted Area',layout, return_keyboard_events=True)
+    restricted_window = sg.Window('Restricted Area',layout, return_keyboard_events=True,element_justification='c')
     
     while True:
         event, values = restricted_window.read()
@@ -229,12 +254,15 @@ def DeleteRestrictionByVLAN():
 
     deleted = False
     layout=[
+        [sg.Text('')],
+        [sg.Text('ViPeN', font=('Helvetica',42))],
         [sg.Text('Restriction to Delete:')],
         [sg.Listbox(values=toShow, key='name', size=(50,6), enable_events=True, horizontal_scroll=True)],
-        [sg.Button('Delete Restriction',bind_return_key=True)],
-        [sg.Button('Go Back')]
+        [sg.Text('')],
+        [sg.Button('Delete Restriction',bind_return_key=True),sg.Button('Go Back')],
+        [sg.Text('')]
     ]
-    restricted_window = sg.Window('Restricted Area',layout, return_keyboard_events=True)
+    restricted_window = sg.Window('Restricted Area',layout, return_keyboard_events=True,element_justification='c')
     
     while True:
         event, values = restricted_window.read()
@@ -268,16 +296,20 @@ def main():
     """Main function of the program."""
     # Set up GUI layout and window
 
-    sg.theme('DarkBlue3')
+    sg.theme('DarkAmber')
+    sg.set_options(font=('Arial Bold',18))
 
     layout = [
+        [sg.Text('')],
+        [sg.Text('ViPeN', font=('Helvetica',42))],
+        [sg.Text("The best V.P.N. in the market",font=('Arial',18))],
+        [sg.Text('')],
+        [sg.Button('Start VPN'),sg.Button('Stop VPN')],
         [sg.Button('Create User'), sg.Button('Delete User')],
         [sg.Button('Restrict User'),sg.Button('Restrict VLAN')],
-        [sg.Button('Delete Restriction By Username')],
-        [sg.Button('Delete Restriction by VLAN')],
-        [sg.Button('Show Logs')],
-        [sg.Button('Start VPN'),sg.Button('Stop VPN')],
-        [sg.Button('Exit')]     
+        [sg.Button('Unrestrict User'),sg.Button('Unrestrict VLAN')],
+        [sg.Button('Show Logs'),sg.Button('Exit')],
+        [sg.Text('')],
     ]
     
     window2 = sg.Window('VPN', layout, element_justification='c')
@@ -285,7 +317,7 @@ def main():
     window2.size = (400, 400)
     
 
-    window2.Resizable = True
+    window2.Resizable = False
     while True:
         event, values = window2.read()
         if event == sg.WIN_CLOSED or event=='Exit' :
@@ -310,10 +342,10 @@ def main():
         if event == 'Delete User':
             window2.close()
             DeleteUser()
-        if event == 'Delete Restriction By Username':
+        if event == 'Unrestrict User':
             window2.close()
             DeleteRestrictionByUser()
-        if event == 'Delete Restriction by VLAN':
+        if event == 'Unrestrict VLAN':
             window2.close()
             DeleteRestrictionByVLAN()
         

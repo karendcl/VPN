@@ -1,33 +1,13 @@
-2023-12-23 23:04:48.914270 :  Forwarded packet coming from 127.0.0.1:0 to 127.0.0.1:7001 disguised as 107.114.147.182:14090
-2023-12-23 23:04:48.936019 :  Ignored packet meant for port 7001
-2023-12-23 23:04:52.010578 :  Forwarded packet coming from 127.0.0.1:0 to 127.0.0.1:7001 disguised as 107.114.147.182:14090
-2023-12-23 23:04:52.033282 :  Ignored packet meant for port 7001
-2023-12-23 23:06:12.075036 :  Forwarded packet coming from 127.0.0.1:0 to 127.0.0.1:7000 disguised as 107.114.147.182:14090
-2023-12-23 23:06:12.112211 :  Ignored packet meant for port 7000
-2023-12-23 23:06:16.709377 :  Checksum does not match, packet might be corrupted
-2023-12-23 23:06:20.317565 :  Forwarded packet coming from 127.0.0.1:0 to 127.0.0.1:7000 disguised as 107.114.147.182:14090
-2023-12-23 23:06:20.350351 :  Ignored packet meant for port 7000
-2023-12-23 23:06:25.739976 :  Forwarded packet coming from 127.0.0.1:0 to 127.0.0.1:7001 disguised as 107.114.147.182:14090
-2023-12-23 23:06:25.763232 :  Ignored packet meant for port 7001
-2023-12-23 23:06:29.090717 :  Forwarded packet coming from 127.0.0.1:0 to 127.0.0.1:7001 disguised as 107.114.147.182:14090
-2023-12-23 23:06:29.117565 :  Ignored packet meant for port 7001
-2023-12-23 23:06:31.903503 :  Checksum does not match, packet might be corrupted
-2023-12-23 23:06:35.331154 :  Forwarded packet coming from 127.0.0.1:0 to 127.0.0.1:7000 disguised as 107.114.147.182:14090
-2023-12-23 23:06:35.365793 :  Ignored packet meant for port 7000
-2023-12-23 23:14:48.635026 :  Checksum does not match, packet might be corrupted
-2023-12-23 23:14:51.895031 :  Forwarded packet coming from 127.0.0.1:0 to 127.0.0.1:7000 disguised as 107.114.147.182:14090
-2023-12-23 23:14:51.920589 :  Ignored packet meant for port 7000
-2023-12-23 23:14:55.618061 :  Forwarded packet coming from 127.0.0.1:0 to 127.0.0.1:7000 disguised as 107.114.147.182:14090
-2023-12-23 23:14:55.654597 :  Ignored packet meant for port 7000
-2023-12-23 23:14:58.087640 :  Forwarded packet coming from 127.0.0.1:0 to 127.0.0.1:7000 disguised as 107.114.147.182:14090
-2023-12-23 23:14:58.136244 :  Ignored packet meant for port 7000
-2023-12-23 23:15:02.528294 :  Forwarded packet coming from 127.0.0.1:0 to 127.0.0.1:7001 disguised as 107.114.147.182:14090
-2023-12-23 23:15:02.554762 :  Ignored packet meant for port 7001
-2023-12-23 23:15:04.706451 :  Forwarded packet coming from 127.0.0.1:0 to 127.0.0.1:7001 disguised as 107.114.147.182:14090
-2023-12-23 23:15:04.734667 :  Ignored packet meant for port 7001
-2023-12-23 23:15:07.396294 :  Forwarded packet coming from 127.0.0.1:0 to 127.0.0.1:7001 disguised as 107.114.147.182:14090
-2023-12-23 23:15:07.426102 :  Ignored packet meant for port 7001
-2023-12-23 23:28:21.865590 :  Forwarded packet coming from 127.0.0.1:0 to 127.0.0.1:7000 disguised as 107.114.147.182:14090
-2023-12-23 23:28:21.899181 :  Ignored packet meant for port 7000
-2023-12-23 23:28:26.451097 :  Forwarded packet coming from 127.0.0.1:0 to 127.0.0.1:7001 disguised as 107.114.147.182:14090
-2023-12-23 23:28:26.470504 :  Ignored packet meant for port 7001
+2023-12-24 12:33:58.712176 :  User Rodrigo del Monte created with IP address 130.93.31.99, port 14410 and vlan 34
+2023-12-24 12:41:08.225312 :  User k created with IP address 170.126.84.132, port 16436 and vlan 12
+2023-12-24 12:42:05.762240 :  User Silverio created with IP address 249.88.44.35, port 11994 and vlan 1233
+2023-12-24 12:43:23.522563 :  User Roberto created with IP address 194.167.89.197, port 17887 and vlan 1
+2023-12-24 12:48:25.817818 :  User Silverio deleted
+2023-12-24 12:50:53.121388 :  User k deleted
+2023-12-24 13:08:48.027295 :  User Robertico la amenaza created with IP address 244.115.189.152, port 14981 and vlan 43
+2023-12-24 13:09:02.297676 :  User Robertico la amenaza restricted from 31 IP Address
+2023-12-24 13:09:10.840911 :  User Robertico la amenaza unrestricted from IP 31
+2023-12-24 13:09:20.041835 :  All users from 43 VLAN restricted from 12 IP Address
+2023-12-24 13:09:25.090224 :  All users from 43 VLAN unrestricted from IP 12
+2023-12-24 13:09:31.473259 :  User Robertico la amenaza deleted
+2023-12-24 13:37:09.905307 :  User Javier created with IP address 123.16.101.206, port 14692 and vlan 1

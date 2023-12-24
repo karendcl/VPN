@@ -30,7 +30,7 @@ def logIn(username, password):
     if username in users and users[username]['password'] == password:
             return users[username]['port'] , users[username]['ip_address']
     else:
-            return False
+            return (False,None)
     
 
 def VPNLogs():
