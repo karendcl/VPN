@@ -228,11 +228,11 @@ class VPN:
 
                     # Generate new UDP header with server port as source and dynamic port from data
                     new_source_port = self.SERVER_PORT
-                    new_udp_header = struct.pack("!HHHH", new_source_port, forward_port, length, 0)
+                    new_udp_header = struct.pack("!HHHH", source_port, forward_port, length, 0)
 
                     data_to_send = data[30:].decode().split('#')[1]
 
-                    data_to_send = f'{sender_addr}#{source_port}#{data_to_send}'.encode()
+                    data_to_send = f'{sender_addr}#{data_to_send}'.encode()
 
                     # Calculate new checksum
                     new_udp_checksum = udp_checksum(self.SERVER_ADDRESS, self.SERVER_ADDRESS, new_udp_header +
@@ -251,7 +251,7 @@ class VPN:
                         f" {self.SERVER_ADDRESS}:{forward_port} disguised as {sender_addr}:{source_port}")
                 else:
                     # Discard the packet
-                    self.log_message(f"Ignored packet meant for port {dest_port}
+                    self.log_message(f"Ignored packet meant for port {dest_port}")
             except AttributeError:
                 if self.raw_socket is None:
                     break

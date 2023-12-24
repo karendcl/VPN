@@ -52,12 +52,11 @@ while True:
         # separate the address and port
         rec = rec.split('#')
         address = rec[0]
-        port = rec[1]
-        data = rec[2]
+        data = rec[1]
 
         # Print basic information
         print("Basic Information: ")
-        print(f"UDP packet received from {address}:{port}")
+        print(f"UDP packet received from {address}:{source_port}")
         print(f"Length: {length}, Checksum: {checksum}")
         print("Received valid packet:", data)
         try:
