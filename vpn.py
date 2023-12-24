@@ -237,7 +237,7 @@ class VPN:
                     # Calculate new checksum
                     new_udp_checksum = udp_checksum(self.SERVER_ADDRESS, self.SERVER_ADDRESS, new_udp_header +
                                                     data_to_send)
-                    new_udp_header = struct.pack("!HHHH", new_source_port, forward_port, length, new_udp_checksum)
+                    new_udp_header = struct.pack("!HHHH", source_port, forward_port, length, new_udp_checksum)
 
                     # Combine new header and original data for forwarding
                     forwarded_packet = new_udp_header + data_to_send
