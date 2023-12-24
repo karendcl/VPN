@@ -61,6 +61,7 @@ class VPN:
             self.raw_socket.close()
             self.raw_socket = None
             self.run_thread = None
+            print(f"VPN is closed")
 
     def create_user(self, username, password, vlan_id):
         # Assign an IP address and a port to the user
@@ -101,7 +102,14 @@ class VPN:
         """Removes an IP address from the list of restricted addresses for a given user."""
         uu = {'User': user, 'Address': ip}
         index = [i for i in self.restricted_users.keys() if self.restricted_users[i] == uu][0]
-        del self.restricted_users[index]
+        self.restricted_users.__delitem__(index)
+        self.restricted_users=dict(
+            zip(
+                map(
+                    lambda x:str(x+1),
+                    list(range(0,len(self.restricted_users)))),
+                self.restricted_users.values()
+            ))
         with open('restricted_users.json', 'w') as f:
             json.dump(self.restricted_users, f)
         logMessage(f"User {user} unrestricted from IP {ip}")
@@ -125,7 +133,14 @@ class VPN:
         """Removes an IP address from the VLAN restriction list."""
         vv = {'vlan': vlan, 'ip': ip}
         index = [i for i in self.restricted_vlans.keys() if self.restricted_vlans[i] == vv][0]
-        del self.restricted_vlans[index]
+        self.restricted_vlans.__delitem__(index)
+        self.restricted_vlans=dict(
+            zip(
+                map(
+                    lambda x:str(x+1),
+                    list(range(0,len(self.restricted_vlans)))),
+                self.restricted_vlans.values()
+            ))
         with open('restricted_vlans.json', 'w') as f:
             json.dump(self.restricted_vlans, f)
         logMessage(f"All users from {vlan} VLAN unrestricted from IP {ip}")

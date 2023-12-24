@@ -3,16 +3,15 @@ import socket
 import struct
 
 def process_data(data, res=1):
-    """Return factorial of data"""
+    #return factorial of data
     try:
         num = int(data)
         if num <=1:
             return res
         res *=num
         return process_data(num-1,res)
-    except Exception as e:
-        print(f'Error: {e}')
-
+    except:
+        print(f'Data received: {data}. Could not parse to a number')
 
 # Create and bind raw socket
 SERVER_ADDRESS = "127.0.0.1"
