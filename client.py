@@ -58,6 +58,8 @@ def SendUDPpacket(message):
 
 
 def LogIn():
+    global logged, username, virtualPort, virtualIp
+
     layout = [
             [[sg.Text("")]],
             [sg.Text('ViPeN', font=('Helvetica',42))],
@@ -68,13 +70,14 @@ def LogIn():
             [sg.Button('Login'), sg.Button('Back')],
             [[sg.Text("")]]
         ]
-    
-    global logged, username, virtualPort, virtualIp
-    
+
     window = sg.Window('Chat Client', layout,element_justification='c')
     while True:
+        if logged:
+            sg.popup_error(f'Already log in as {username}. Please log out first')
+            break
         event, values = window.read()
-        if event == 'exit' or event== sg.WIN_CLOSED:
+        if event == 'exit' or event == sg.WIN_CLOSED:
             break
         if event == "Login":
             try:
@@ -130,19 +133,22 @@ def SendMess():
             if event == 'exit' or event== sg.WIN_CLOSED:
                 break
             if event=='Send':
-                mes = values['Message']
-                prt = values['fun'][0]
-                if mes is not None and prt is not None:
-                    if prt == 'Factorial':
-                        REAL_DEST_PORT = 7000
-                    else:
-                        REAL_DEST_PORT = 7001
-                    
-                    SendUDPpacket(mes)
-                    window['Message'].update('')
+                try:
+                    mes = values['Message']
+                    prt = values['fun'][0]
+                    if mes is not None and prt is not None and mes is not '':
+                        if prt == 'Factorial':
+                            REAL_DEST_PORT = 7000
+                        else:
+                            REAL_DEST_PORT = 7001
 
-                else:
-                    sg.popup_error('No fields can be empty')
+                        SendUDPpacket(mes)
+                        window['Message'].update('')
+                    else:
+                        sg.popup_error('No fields can be empty')
+                except Exception as e:
+                    sg.popup_error(e)
+                    break
             elif event=="disconnect":
                 logged = False
                 break
