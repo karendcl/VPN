@@ -7,12 +7,13 @@ def process_data(data):
     try:
         num = int(data)
         return num+1
-    except:
-        print(f'Received {data}, could not convert to a number')
+    except Exception as e:
+        print(f'Error: {e}')
+
 
 # Create and bind raw socket
 SERVER_ADDRESS = "127.0.0.1"
-SERVER_PORT = 7001
+SERVER_PORT = 7000
 raw_socket = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_UDP)
 raw_socket.bind(('localhost', SERVER_PORT))
 
@@ -43,18 +44,27 @@ while True:
         calculated_checksum = udp_checksum(sender_address, SERVER_ADDRESS, zero_checksum_header + data[28:])
 
         if received_checksum != calculated_checksum:
-            print('Checksum does not match. Packet corrupted')
-
-        # Print basic information
-        print("Basic Information: ")
-        print(f"UDP packet received from {addr}")
-        print(f"Source port: {source_port}, Destination port: {dest_port}")
-        print(f"Length: {length}, Checksum: {checksum}")
+            logMessage('Checksum does not match. Packet corrupted')
 
         # Process the packet
         rec = data[28:].decode()
-        print("Received valid packet:", rec)
-        print(f'Plus one of {rec}: {process_data(rec)}')
+
+        # separate the address and port
+        rec = rec.split('#')
+        address = rec[0]
+        port = rec[1]
+        data = rec[2]
+
+        # Print basic information
+        print("Basic Information: ")
+        print(f"UDP packet received from {address}:{port}")
+        print(f"Length: {length}, Checksum: {checksum}")
+        print("Received valid packet:", data)
+        try:
+            res = process_data(data)
+            print(f'Factorial of {data} is {res}')
+        except:
+            pass
     else:
         # Discard the packet
         print("Ignoring packet coming from: ", source_port)

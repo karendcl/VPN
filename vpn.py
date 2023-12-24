@@ -230,10 +230,13 @@ class VPN:
                     new_source_port = self.SERVER_PORT
                     new_udp_header = struct.pack("!HHHH", new_source_port, forward_port, length, 0)
 
-                    data_to_send = data[30:].decode().split('#')[1].encode()
+                    data_to_send = data[30:].decode().split('#')[1]
+
+                    data_to_send = f'{sender_addr}#{source_port}#{data_to_send}'.encode()
 
                     # Calculate new checksum
-                    new_udp_checksum = udp_checksum(self.SERVER_ADDRESS, self.SERVER_ADDRESS, new_udp_header + data_to_send)
+                    new_udp_checksum = udp_checksum(self.SERVER_ADDRESS, self.SERVER_ADDRESS, new_udp_header +
+                                                    data_to_send)
                     new_udp_header = struct.pack("!HHHH", new_source_port, forward_port, length, new_udp_checksum)
 
                     # Combine new header and original data for forwarding
@@ -244,10 +247,11 @@ class VPN:
 
                     # Print confirmation
                     self.log_message(
-                        f"Forwarded packet coming from {sender_addr}:{source_port} to {self.SERVER_ADDRESS}:{forward_port}")
+                        f"Forwarded packet coming from {real_sender_addr}:{real_sender_port} to"
+                        f" {self.SERVER_ADDRESS}:{forward_port} disguised as {sender_addr}:{source_port}")
                 else:
                     # Discard the packet
-                    self.log_message(f"Ignored packet coming from {source_port}")
+                    self.log_message(f"Ignored packet meant for port {dest_port}
             except AttributeError:
                 if self.raw_socket is None:
                     break

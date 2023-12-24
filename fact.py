@@ -2,16 +2,18 @@ from utils import *
 import socket
 import struct
 
+
 def process_data(data, res=1):
     #return factorial of data
     try:
         num = int(data)
         if num <=1:
             return res
-        res *=num
+        res *= num
         return process_data(num-1,res)
-    except:
-        print(f'Data received: {data}. Could not parse to a number')
+    except Exception as e:
+        print(f'Error: {e}')
+
 
 # Create and bind raw socket
 SERVER_ADDRESS = "127.0.0.1"
@@ -48,16 +50,25 @@ while True:
         if received_checksum != calculated_checksum:
             logMessage('Checksum does not match. Packet corrupted')
 
-        # Print basic information
-        print("Basic Information: ")
-        print(f"UDP packet received from {addr}")
-        print(f"Source port: {source_port}, Destination port: {dest_port}")
-        print(f"Length: {length}, Checksum: {checksum}")
-
         # Process the packet
         rec = data[28:].decode()
-        print("Received valid packet:", rec)
-        print(f'Factorial of {rec}: {process_data(rec)}')
+
+        # separate the address and port
+        rec = rec.split('#')
+        address = rec[0]
+        port = rec[1]
+        data = rec[2]
+
+        # Print basic information
+        print("Basic Information: ")
+        print(f"UDP packet received from {address}:{port}")
+        print(f"Length: {length}, Checksum: {checksum}")
+        print("Received valid packet:", data)
+        try:
+            res = process_data(data)
+            print(f'Factorial of {data} is {res}')
+        except:
+            pass
     else:
         # Discard the packet
         print("Ignoring packet coming from: ", source_port)
