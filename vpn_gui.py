@@ -25,19 +25,19 @@ def CreateUser():
         if event == 'Submit':
             try:
                 username = values['username']
-                if(list(vpn.users).__contains__(username)):
-                    sg.PopupOK("The user already exist!!")
+                if list(vpn.users).__contains__(username):
+                    sg.PopupOK("The user already exists!")
                     continue
-                if(username==''):
+                if username == '' or username is None:
                     sg.PopupOK("Please introduce user name")
                     continue
                 
                 password = values['password']
-                if(password==''):
+                if password == '' or password is None:
                     sg.PopupOK("Please introduce password")
                     continue
-                if(values['Check']!=password):
-                    sg.PopupOK("The password doesn't match")
+                if values['Check'] != password:
+                    sg.PopupOK("The passwords don't match")
                     continue
                 
                 vlan = int(values['vlan'])
@@ -50,7 +50,7 @@ def CreateUser():
                 window['vlan'].Update("")
             except Exception as e:
                 sg.PopupError(f'Error {e}')
-        if event=='Exit':
+        if event == 'Exit':
             break
         if event == sg.WIN_CLOSED:
             break
@@ -66,7 +66,7 @@ def RestrictUser():
         [sg.Text('ViPeN', font=('Helvetica',42))],
         [sg.Text('Username to restrict:')],
         [sg.Listbox(values=allUsers, key='name', size=(25,6), enable_events=True)],
-        [sg.Text('IP Address:'),sg.Input(key="ip", size=(15,1))],
+        [sg.Text('Port:'),sg.Input(key="ip", size=(15,1))],
         [sg.Text('')],
         [sg.Button('Restrict Access',bind_return_key=True),sg.Button('Go Back')],
         [sg.Text('')]
@@ -135,7 +135,7 @@ def RestrictVLAN():
         [sg.Text('ViPeN', font=('Helvetica',42))],
         [sg.Text('Enter the VLAN to restrict')],
         [sg.Input(key='vlans',size=(35,1),enable_events=True)],
-        [sg.Text('Enter the IP address')],
+        [sg.Text('Enter the Port')],
         [sg.Input(key='ips',size=(35,1))],
         [sg.Text('')],
         [sg.Button('Restrict'), sg.Button('Return')],
@@ -201,7 +201,7 @@ def DeleteRestrictionByUser():
     for i in range(len(allRestrictions)):
         user =allRestrictions[i]['User']
         ip = allRestrictions[i]['Address']
-        toShow[i] = f'User {user} restricted from {ip}'
+        toShow[i] = f'User {user} restricted from {ip} port'
 
     deleted = False
     layout=[
@@ -250,7 +250,7 @@ def DeleteRestrictionByVLAN():
     for i in range(len(allRestrictions)):
         vlan =allRestrictions[i]['vlan']
         ip = allRestrictions[i]['ip']
-        toShow[i] = f'VLAN {vlan} restricted from {ip}'
+        toShow[i] = f'VLAN {vlan} restricted from {ip} port'
 
     deleted = False
     layout=[

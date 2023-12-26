@@ -96,7 +96,7 @@ class VPN:
         with open('restricted_users.json', 'w') as f:
             json.dump(self.restricted_users, f)
 
-        logMessage(f"User {user} restricted from {ip} IP Address")
+        logMessage(f"User {user} restricted from port {ip}")
     
     def unrestrict_user(self, user, ip):
         """Removes an IP address from the list of restricted addresses for a given user."""
@@ -112,7 +112,7 @@ class VPN:
             ))
         with open('restricted_users.json', 'w') as f:
             json.dump(self.restricted_users, f)
-        logMessage(f"User {user} unrestricted from IP {ip}")
+        logMessage(f"User {user} unrestricted from port {ip}")
 
     def restrict_vlan(self, vlan_id, ip):
         """Adds an IP address to the VLAN restriction list."""
@@ -127,7 +127,7 @@ class VPN:
         with open('restricted_vlans.json', 'w') as f:
             json.dump(self.restricted_vlans, f)
 
-        logMessage(f"All users from {vlan_id} VLAN restricted from {ip} IP Address")
+        logMessage(f"All users from {vlan_id} VLAN restricted from port {ip} ")
     
     def unrestrict_vlan(self, vlan, ip):
         """Removes an IP address from the VLAN restriction list."""
@@ -143,7 +143,7 @@ class VPN:
             ))
         with open('restricted_vlans.json', 'w') as f:
             json.dump(self.restricted_vlans, f)
-        logMessage(f"All users from {vlan} VLAN unrestricted from IP {ip}")
+        logMessage(f"All users from {vlan} VLAN unrestricted from port {ip}")
 
 
     def validate_user(self, sender_addr, sender_port, dest_port):
@@ -168,7 +168,7 @@ class VPN:
         vv = {'vlan': int(user_data['vlan_id']), 'ip': dest_port}
         
         if vv in self.restricted_vlans.values():
-            self.log_message(f"Restricted VLAN '{user_data['vlan_id']}' for ip '{dest_port}'")
+            self.log_message(f"Restricted VLAN '{user_data['vlan_id']}' for port '{dest_port}'")
             return False
        
         # If all validations pass, return True
