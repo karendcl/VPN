@@ -31,11 +31,11 @@ The server creates a raw socket and listens for incoming packets. When it receiv
 
 The VPN creates a raw socket and listens for incoming packets. When it receives a packet, it validates the user and checks the checksum. If the user is valid and the checksum is correct, it forwards the packet to the server. Otherwise, it discards the packet.
 
-The VPN can also restrict certain users and VLANs. Restricted users are identified by their ip address, and restricted VLANs are identified by their VLAN ID.
+The VPN can also restrict certain users and VLANs. Restricted users are identified by their username, and restricted VLANs are identified by their VLAN ID.
 
 ### `vpn_gui.py`
 
-Through the GUI, the VPN 'owner' can register users, restrict users and vlans, see the VPN logs in a more user-friendly way
+Through the GUI, the VPN 'owner' can register users, restrict users and vlans, remove users, unrestrict users and vlans and see the VPN logs in a more user-friendly way.
 
 ![VPN](gui.PNG)
 ![restriction](restr.png)
@@ -47,6 +47,7 @@ Through the GUI, the VPN 'owner' can register users, restrict users and vlans, s
 - `logMessage`: saves into the `logs.txt` all the vpn activity
 - `udp_checksum`: Calculates the UDP checksum for a packet.
 - `calc_checksum`: Calculates the checksum for a packet.
+- `log_in`: This method checks the credentials of the user and either logs the user in or returns False.
 
 ## Usage
 
