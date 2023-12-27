@@ -4,6 +4,7 @@ import socket
 import struct
 import PySimpleGUI as sg
 from utils import *
+from clientDraw import Create_Draw
 
 
 logged = False
@@ -13,6 +14,7 @@ virtualIp = ''
 SERVER_ADDRESS = "127.0.0.1"
 SERVER_PORT =8000
 REAL_DEST_PORT = 0
+P_COALITION=1000000000
 
 def SendUDPpacket(message):
     """Send a UDP packet to the server"""
@@ -117,7 +119,7 @@ def SendMess():
             [sg.Text("Connected as "+ username +"\n")],
             [sg.Text('Send Message')],
             [sg.Input(key='Message', size=(20, 4))],
-            [sg.Listbox(values=['Factorial','Plus 1'], key='fun', size=(20,2))],
+            [sg.Listbox(values=['Factorial','Plus 1','Draw'], key='fun', size=(20,3))],
             [[sg.Text("")]],
             [sg.Button('Send'),sg.Button("LogOut", key="disconnect"), sg.Exit(key='exit')],
             [[sg.Text("")]]
@@ -136,16 +138,23 @@ def SendMess():
                 try:
                     mes = values['Message']
                     prt = values['fun'][0]
+        
                     if mes != None and prt != None and mes != '':
                         if prt == 'Factorial':
                             REAL_DEST_PORT = 7000
                         else:
                             REAL_DEST_PORT = 7001
-
+                        SendUDPpacket(mes)
+                        window['Message'].update('')        
+                    elif prt=='Draw':
+                        mes=Create_Draw()
+                        REAL_DEST_PORT = 7002        
                         SendUDPpacket(mes)
                         window['Message'].update('')
+
                     else:
                         sg.popup_error('No fields can be empty')
+                
                 except Exception as e:
                     sg.popup_error(e)
                     break
