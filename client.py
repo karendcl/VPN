@@ -136,7 +136,7 @@ def SendMess():
                 try:
                     mes = values['Message']
                     prt = values['fun'][0]
-                    if mes is not None and prt is not None and mes is not '':
+                    if mes != None and prt != None and mes != '':
                         if prt == 'Factorial':
                             REAL_DEST_PORT = 7000
                         else:
