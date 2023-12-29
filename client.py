@@ -14,7 +14,7 @@ virtualIp = ''
 SERVER_ADDRESS = "127.0.0.1"
 SERVER_PORT =8000
 REAL_DEST_PORT = 0
-P_COALITION=1000000000
+P_COALITION=10
 
 def SendUDPpacket(message):
     """Send a UDP packet to the server"""
@@ -44,7 +44,7 @@ def SendUDPpacket(message):
         # Calculate checksum
         checksum = udp_checksum(SOURCE_ADDRESS, SERVER_ADDRESS, udp_header + data)
 
-        rand_num = random.randint(1, 5)
+        rand_num = random.randint(1, P_COALITION)
         message = messages[i]
         if rand_num == 1:
             checksum_to_send = 1
@@ -55,7 +55,9 @@ def SendUDPpacket(message):
         packet = udp_header + data
         sock.sendto(packet, (SERVER_ADDRESS, SERVER_PORT))
         print(f"Sent UDP packet #{i} to {SERVER_ADDRESS}:{SERVER_PORT} with real destination port {REAL_DEST_PORT}")
-
+        a=1
+        for i in range(10000):
+            a+=1   
     sock.close()
 
 
