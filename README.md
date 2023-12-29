@@ -9,11 +9,13 @@ This project is a simple implementation of a VPN (Virtual Private Network) using
 The project consists of the following files:
 
 - `client.py`: This file contains the code for the client that sends packets to the VPN, through a GUI.
+- `DrawServer`: Contains the code for a server that recieves packets from the VPN and actualize `draw.txt`
 - `fact.py`: This file contains the code for a server that receives packets from the VPN and calculates the factorial of the message.
 - `plus_one.py`: This file contains the code for a server that receives packets from the VPN and adds 1 to the message.
 - `vpn.py`: This file contains the code for the VPN that forwards packets from the client to the server.
 - `vpn_gui.py`: This file provides a GUI to interact with the VPN.
 - `utils.py`: This file contains utility functions like: assigning ip addresses and ports, logging the users in, calculating checksums and logging messages.
+- `clientDraw`: Contains the code to create a window for draw
 
 ## Modules
 
@@ -23,7 +25,7 @@ Firstly the client logs in, and only then it can use the VPN service. The client
 
 ![Client](cl.png#aligncenter)
 
-### `fact.py` and `plus_one.py`
+### `DrawServer.py`, `fact.py` and `plus_one.py`
 
 The server creates a raw socket and listens for incoming packets. When it receives a packet, it unpacks the UDP header and checks the checksum. If the checksum is valid, it processes the packet. Otherwise, it discards the packet.
 
@@ -66,6 +68,7 @@ This project requires Python 3 and the following Python libraries:
 - `struct`
 - `random`
 - `PySimpleGUI`
+- `tkinter`
 
 ## Understanding UDP
 
