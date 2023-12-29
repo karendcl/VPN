@@ -121,13 +121,17 @@ def SendMess():
             [sg.Text("Connected as "+ username +"\n")],
             [sg.Text('Send Message')],
             [sg.Input(key='Message', size=(20, 4))],
-            [sg.Listbox(values=['Factorial','Plus 1','Draw'], key='fun', size=(20,3))],
-            [[sg.Text("")]],
-            [sg.Button('Send'),sg.Button("LogOut", key="disconnect"), sg.Exit(key='exit')],
+            [sg.Listbox(values=['Factorial','Plus 1'], key='fun', size=(20,2))],
+            [sg.Button('Send')],
+            [sg.Text('\n OR Send a Drawing\n')],
+            [sg.Button('Draw'), sg.Button('Send Drawing')],
+            [sg.Text('\n')],
+            [sg.Button("LogOut", key="disconnect"), sg.Exit(key='exit')],
             [[sg.Text("")]]
         ]
     
     window = sg.Window('Chat Client', layout,element_justification='c')
+    drawing = None
 
     if logged==False:
         sg.popup_error('Log In First')
@@ -136,24 +140,31 @@ def SendMess():
             event, values = window.read()
             if event == 'exit' or event== sg.WIN_CLOSED:
                 break
+            if event == 'Draw':
+                drawing = Create_Draw()
+
+            if event == 'Send Drawing':
+                try:
+                    if drawing is not None:
+                        REAL_DEST_PORT = 7002
+                        SendUDPpacket(drawing)
+                    else:
+                        sg.popup_error('Create Drawing First')
+                except Exception as e:
+                    sg.popup_error(f'Error: {e}')
+
             if event=='Send':
                 try:
                     mes = values['Message']
                     prt = values['fun'][0]
         
-                    if mes != None and prt != None and mes != '':
+                    if mes is not None and prt is not None and mes != '':
                         if prt == 'Factorial':
                             REAL_DEST_PORT = 7000
                         else:
                             REAL_DEST_PORT = 7001
                         SendUDPpacket(mes)
-                        window['Message'].update('')        
-                    elif prt=='Draw':
-                        mes=Create_Draw()
-                        REAL_DEST_PORT = 7002        
-                        SendUDPpacket(mes)
                         window['Message'].update('')
-
                     else:
                         sg.popup_error('No fields can be empty')
                 
